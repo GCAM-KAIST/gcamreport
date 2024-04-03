@@ -247,6 +247,15 @@ co2_market_frag_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings"
 )
 use_data(co2_market_frag_map, overwrite = T)
 
+
+# creating PPP for KOREA
+PPP_MER_KOR <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "PPP_MER_KOR.csv"),
+                        skip = 7,
+                        stringsAsFactors = FALSE
+)
+
+use_data(PPP_MER_KOR, overwrite = T)
+
 # List of Constants
 
 convert <- list(
@@ -260,6 +269,7 @@ convert <- list(
   conv_75USD_10USD = 3.227608,
   conv_15USD_10USD = 0.91863,
   conv_19USD_75USD = 0.2658798,
+  conv_90USD_17USD = 102.9/60.8, ######## source : Worldbank - 102.9/60.8,
   conv_C_CO2 = 44 / 12,
   # Elec related conversions
   hr_per_yr = 8760,
@@ -270,6 +280,7 @@ convert <- list(
   CO2_equivalent = 3.666667
 )
 use_data(convert, overwrite = T)
+
 
 # GHG emission conversion
 F_GASES <- c(

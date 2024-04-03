@@ -223,19 +223,53 @@ get_population <- function() {
 #' @importFrom dplyr mutate select left_join rename
 #' @importFrom magrittr %>%
 #' @export
+
+
+row_ppp<- getQuery(prj, "GDP per capita PPP by region") %>%
+  left_join(population_clean %>% rename(pop_mill = value), by = c("scenario", "region", "year")) %>%
+  mutate(
+    value = value * pop_mill * gcamreport::convert$conv_90USD_10USD,
+    var = "GDP|PPP"
+  )
+
+### ''17년으로 바꿔야 되고, 탬플릿도 17년으로 바꿔야 함.
+getQuery(prj, "GDP MER by region") %>%
+  write.csv('test.csv')
+
+kr_ppp<-getQuery(prj, "GDP MER by region") %>% ## GDP MER by region unit is million 1990 USD
+  left_join(PPP_MER_KOR, by ='year') %>%
+  mutate(
+    value = value * gcamreport::convert$conv_million_billion *  #MER
+      gcamreport::convert$conv_90USD_17USD * #MER
+      conversion_ratio, #MER to PPP
+    var = "GDP|PPP"
+  )
+
+
 get_gdp_ppp <- function() {
   value <- pop_mill <- NULL
 
+
   GDP_PPP_clean <<-
-    getQuery(prj, "GDP per capita PPP by region") %>%
-    left_join(population_clean %>% rename(pop_mill = value), by = c("scenario", "region", "year")) %>%
-    mutate(
-      value = value * pop_mill * gcamreport::convert$conv_90USD_10USD,
-      var = "GDP|PPP"
-    ) %>%
+    row_ppp %>% left_join(kr_ppp, by = c("scenario", "region", "year", "var", "Units")) %>%
+    mutate(value = ifelse(region =="South Korea", value.y, value.x),
+           var = "GDP|PPP") %>%
     select(all_of(gcamreport::long_columns))
 }
 
+
+# DEVELOPMENT
+
+
+
+
+#####################IN DEVELOPMENT_jiseok
+#a %>% left_join(b, by = c("scenario", "region", "year", "var", "Units")) %>%
+#  mutate(value = ifelse(region =="South Korea", value.y, value.x)) %>%
+#  select(year, region, value) %>% View()
+#
+#a
+#b
 
 #' get_gdp_mer
 #'
