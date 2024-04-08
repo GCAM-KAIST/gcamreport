@@ -249,7 +249,7 @@ get_population <- function() {
 get_gdp_ppp <- function() {
   value <- pop_mill <- NULL
 
-### 여기 라인 function 밖에서 추가하면 Build시 문제 발생  (Ctrl+Shif+D)
+### Codes below need to be inside of function(), otherwise Build -> Install error (Ctrl+Shift+D)
   ppp_row<<- getQuery(prj, "GDP per capita PPP by region") %>%
     left_join(population_clean %>% rename(pop_mill = value), by = c("scenario", "region", "year")) %>%
     mutate(
