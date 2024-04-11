@@ -256,8 +256,6 @@ PPP_MER_KOR <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "PPP_M
 
 use_data(PPP_MER_KOR, overwrite = T)
 
-
-
 # List of Constants
 
 convert <- list(
