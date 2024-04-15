@@ -2,7 +2,7 @@ devtools::load_all()
 
 
 
-#develop
+# develop
 
 generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path to database under gcamreport folder
                 db_name = "testdb",   # db folder name
