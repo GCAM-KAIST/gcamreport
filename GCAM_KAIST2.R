@@ -2,6 +2,8 @@ devtools::load_all()
 
 
 
+#develop
+
 generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path to database under gcamreport folder
                 db_name = "testdb",   # db folder name
                 scenarios = c('Reference', 'NZ_Electricity_Nuc_Policy'), ## scenario names
