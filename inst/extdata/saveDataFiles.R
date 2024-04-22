@@ -47,6 +47,9 @@ global_vet_values <- read.csv(file.path(rawDataFolder, "inst/extdata/vetting", "
 )
 use_data(global_vet_values, overwrite = T)
 
+template %>%
+  filter(Variable =="GDP|PPP")
+
 # Read in template
 template <- read.csv(file.path(rawDataFolder, "inst/extdata", "template/reporting_template.csv"),
   fileEncoding = "UTF-8-BOM", stringsAsFactors = FALSE

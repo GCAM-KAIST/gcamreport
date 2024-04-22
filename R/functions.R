@@ -253,25 +253,32 @@ get_gdp_ppp <- function() {
   ppp_row<<- getQuery(prj, "GDP per capita PPP by region") %>%
     left_join(population_clean %>% rename(pop_mill = value), by = c("scenario", "region", "year")) %>%
     mutate(
-      value = value * pop_mill * gcamreport::convert$conv_90USD_10USD,
-      var = "GDP|PPP")
+      value = value * pop_mill * gcamreport::convert$conv_90USD_10USD, #### $2010USD
+      var = "GDP|PPP") %>%
+    select(-pop_mill) %>%
+    filter(region !='South Korea')
 
   ppp_kor <<-getQuery(prj, "GDP MER by region") %>% ## GDP MER by region unit is million 1990 USD
+    filter(region =="South Korea") %>%
     left_join(PPP_MER_KOR, by ='year') %>%
     mutate(
       value = value * gcamreport::convert$conv_million_billion *  #MER
-        gcamreport::convert$conv_90USD_17USD * #MER
+        gcamreport::convert$conv_90USD_17USD * #$2017USD
         conversion_ratio, #MER to PPP
       var = "GDP|PPP"
-    )
-
+    ) %>%
+    select(-conversion_ratio)
 
 
   GDP_PPP_clean <<-
-    ppp_row %>% left_join(ppp_kor, by = c("scenario", "region", "year", "var", "Units")) %>%
-    mutate(value = ifelse(region =="South Korea", value.y, value.x),
-           var = "GDP|PPP") %>%
+    bind_rows(ppp_row, ppp_kor) %>%
     select(all_of(gcamreport::long_columns))
+
+#  GDP_PPP_clean <<-
+#    ppp_row %>% left_join(ppp_kor, by = c("scenario", "region", "year", "var", "Units")) %>%
+#    mutate(value = ifelse(region =="South Korea", value.y, value.x),
+#           var = "GDP|PPP") %>%
+#    select(all_of(gcamreport::long_columns))
 }
 
 

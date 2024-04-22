@@ -2,6 +2,13 @@ devtools::load_all()
 
 
 
+
+
+# available variable
+available_variables()
+
+
+
 # develop
 
 generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path to database under gcamreport folder
@@ -16,8 +23,8 @@ generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path
                   #'Primary Energy*',
                   #'Secondary Energy*',
                   #'Final Energy*',
-                  'GDP|MER',
-                  "GDP|PPP",
+                  'GDP|MER',  # MER in $2010USD
+                  "GDP|PPP",  # PPP in $2017USD
                   #'Land Cover*',
                   'Population'
                   #  'Forestry Demand',
