@@ -261,10 +261,11 @@ get_gdp_ppp <- function() {
   ppp_kor <<-getQuery(prj, "GDP MER by region") %>% ## GDP MER by region unit is million 1990 USD
     filter(region =="South Korea") %>%
     left_join(PPP_MER_KOR, by ='year') %>%
+    left_join(USDbillion2017_to_KRWtrillion2015, by ='year') %>%
     mutate(
-      value = value * gcamreport::convert$conv_million_billion *  #MER
-        gcamreport::convert$conv_90USD_17USD * #$2017USD
-        conversion_ratio, #MER to PPP
+      value = value * gcamreport::convert$conv_million_billion *  #billion MER
+        gcamreport::convert$conv_90USD_17USD * #billion $2017USD MER
+        conversion_ratio, #MER to PPP, billion $2017 USD PPP
       var = "GDP|PPP"
     ) %>%
     select(-conversion_ratio)
@@ -274,11 +275,36 @@ get_gdp_ppp <- function() {
     bind_rows(ppp_row, ppp_kor) %>%
     select(all_of(gcamreport::long_columns))
 
-#  GDP_PPP_clean <<-
-#    ppp_row %>% left_join(ppp_kor, by = c("scenario", "region", "year", "var", "Units")) %>%
-#    mutate(value = ifelse(region =="South Korea", value.y, value.x),
-#           var = "GDP|PPP") %>%
-#    select(all_of(gcamreport::long_columns))
+
+}
+
+#' get_gdp_krw
+#'
+#' Get GDP (MER) query, compute regional GDP, and change units to [15KRW].
+#' @keywords internal GDP
+#' @return mer_krw global variable
+#' @importFrom rgcam getQuery
+#' @importFrom dplyr mutate select left_join rename
+#' @importFrom magrittr %>%
+#' @export
+
+
+get_gdp_krw <- function() {
+  value <- pop_mill <- NULL
+
+  ### Codes below need to be inside of function(), otherwise Build -> Install error (Ctrl+Shift+D)
+
+  mer_krw <<-getQuery(prj, "GDP MER by region") %>% ## GDP MER by region unit is million 1990 USD
+    filter(region =="South Korea") %>%
+    mutate(
+      value = value * gcamreport::convert$conv_90USD_15USD *  # 90USD to 15USD
+        gcamreport::convert$exchange_rate_2015_USD_KRW * # 15USD TO 15KRW
+        gcamreport::convert$conv_million_trillion, #million to trillion
+      var = "GDP|KRW"
+    ) %>%
+    select(all_of(gcamreport::long_columns))
+
+
 }
 
 

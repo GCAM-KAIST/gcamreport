@@ -8,6 +8,13 @@ devtools::load_all()
 available_variables()
 
 
+gcamreport::template %>%
+  filter(Variable =="GDP|PPP")
+
+
+
+template %>%
+  filter(Variable =="GDP|PPP")
 
 # develop
 
@@ -24,7 +31,8 @@ generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path
                   #'Secondary Energy*',
                   #'Final Energy*',
                   'GDP|MER',  # MER in $2010USD
-                  "GDP|PPP",  # PPP in $2017USD
+                  "GDP|PPP",  # PPP in $2017USD,
+                  "GDP|KRW",
                   #'Land Cover*',
                   'Population'
                   #  'Forestry Demand',

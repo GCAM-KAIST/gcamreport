@@ -47,9 +47,6 @@ global_vet_values <- read.csv(file.path(rawDataFolder, "inst/extdata/vetting", "
 )
 use_data(global_vet_values, overwrite = T)
 
-template %>%
-  filter(Variable =="GDP|PPP")
-
 # Read in template
 template <- read.csv(file.path(rawDataFolder, "inst/extdata", "template/reporting_template.csv"),
   fileEncoding = "UTF-8-BOM", stringsAsFactors = FALSE
@@ -260,6 +257,16 @@ PPP_MER_KOR <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "PPP_M
 use_data(PPP_MER_KOR, overwrite = T)
 
 
+# (PPP) 2017billionUSD to 2015trillionKRW
+USDbillion2017_to_KRWtrillion2015 <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "2017USD_to_2015KRW.csv"),
+                        skip = 1,
+                        stringsAsFactors = FALSE
+) %>%
+  select(year, conversion_ratio_2015triKRW)
+
+use_data(USDbillion2017_to_KRWtrillion2015, overwrite = T)
+
+
 
 # List of Constants
 
@@ -275,7 +282,14 @@ convert <- list(
   conv_15USD_10USD = 0.91863,
   conv_19USD_75USD = 0.2658798,
   conv_90USD_17USD = 102.9 / 60.8, ######## source : Worldbank - 102.9/60.8,
+
+  conv_90USD_15USD = 100/60.8,
+  exchange_rate_2015_USD_KRW = 1130.953,
+  conv_million_trillion = 1/1000000,
+
+
   conv_C_CO2 = 44 / 12,
+
   # Elec related conversions
   hr_per_yr = 8760,
   EJ_to_GWh = 0.0000036,
@@ -285,6 +299,8 @@ convert <- list(
   CO2_equivalent = 3.666667
 )
 use_data(convert, overwrite = T)
+
+gcamreport::convert$conv_million_trillion
 
 gcamreport::convert$conv_90USD_17USD
 gcamreport::convert$CO2_equivalent
