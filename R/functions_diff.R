@@ -5,6 +5,30 @@ options(dplyr.summarise.inform = FALSE)
 #########################################################################
 
 
+#' filter_desired_regions
+#'
+#' Return vector of the desired regions available in the loaded project
+#' @param des_reg vector of the user desired regions
+#' @return vector of the desired regions available in the loaded project
+#' @importFrom rgcam getQuery
+#' @export
+filter_desired_regions <- function(des_reg) {
+  r <- 1
+  rmax <- length(listQueries(prj))
+  while (r <= rmax) {
+    tmp <- getQuery(prj, listQueries(prj)[r])
+    if ("region" %in% colnames(tmp)) {
+      des_reg <- unique(tmp$region)
+      return(des_reg)
+    }
+    r <- r + 1
+  }
+  warning("Desired regions could not be filtered through the loaded project data. The standardize report will contain the regions specified by the user.")
+  return(des_reg)
+}
+
+
+
 #' transform_to_xml
 #'
 #' Return xml document from a given queries list
@@ -82,6 +106,13 @@ filter_loading_regions <- function(data, desired_regions = "All", variable) {
       "CO2 concentrations", "global mean temperature",
       "total climate forcing"
     ))) {
+      # check the desired regions are available in the data
+      avail_reg <- unique(data$region)
+      not_avail <- setdiff(desired_regions, avail_reg)
+      if (length(not_avail) > 0) {
+        if (length(not_avail) == 1) stop("The desired region ", paste(not_avail, collapse = ""), " is not available in the loaded project. In detail, it is not availabe in the query '", variable, "'.")
+        if (length(not_avail) > 1) stop("The desired regions ", paste(not_avail, collapse = ", "), " are not available in the loaded project. In detail, they are not availabe in the query '", variable, "'.")
+      }
       data <- data %>%
         filter(region %in% desired_regions)
     }
@@ -242,69 +273,17 @@ get_population <- function() {
 #' @importFrom dplyr mutate select left_join rename
 #' @importFrom magrittr %>%
 #' @export
-
-
-
-
 get_gdp_ppp <- function() {
   value <- pop_mill <- NULL
 
-### Codes below need to be inside of function(), otherwise Build -> Install error (Ctrl+Shift+D)
-  ppp_row<<- getQuery(prj, "GDP per capita PPP by region") %>%
+  GDP_PPP_clean <<-
+    getQuery(prj, "GDP per capita PPP by region") %>%
     left_join(population_clean %>% rename(pop_mill = value), by = c("scenario", "region", "year")) %>%
     mutate(
-      value = value * pop_mill * gcamreport::convert$conv_90USD_10USD, #### $2010USD
-      var = "GDP|PPP") %>%
-    select(-pop_mill) %>%
-    filter(region !='South Korea')
-
-  ppp_kor <<-getQuery(prj, "GDP MER by region") %>% ## GDP MER by region unit is million 1990 USD
-    filter(region =="South Korea") %>%
-    left_join(PPP_MER_KOR, by ='year') %>%
-    left_join(USDbillion2017_to_KRWtrillion2015, by ='year') %>%
-    mutate(
-      value = value * gcamreport::convert$conv_million_billion *  #billion MER
-        gcamreport::convert$conv_90USD_17USD * #billion $2017USD MER
-        conversion_ratio, #MER to PPP, billion $2017 USD PPP
+      value = value * pop_mill * gcamreport::convert$conv_90USD_10USD,
       var = "GDP|PPP"
     ) %>%
-    select(-conversion_ratio)
-
-
-  GDP_PPP_clean <<-
-    bind_rows(ppp_row, ppp_kor) %>%
     select(all_of(gcamreport::long_columns))
-
-
-}
-
-#' get_gdp_krw
-#'
-#' Get GDP (MER) query, compute regional GDP, and change units to [15KRW].
-#' @keywords internal GDP
-#' @return mer_krw global variable
-#' @importFrom rgcam getQuery
-#' @importFrom dplyr mutate select left_join rename
-#' @importFrom magrittr %>%
-#' @export
-
-
-get_gdp_krw <- function() {
-  value <- pop_mill <- NULL
-
-  ### Codes below need to be inside of function(), otherwise Build -> Install error (Ctrl+Shift+D)
-
-  mer_krw <<-getQuery(prj, "GDP MER by region") %>% ## GDP MER by region unit is million 1990 USD
-    filter(region =="South Korea") %>%
-    mutate(
-      value = value * gcamreport::convert$conv_90USD_15USD *  # 90USD to 15USD
-        gcamreport::convert$exchange_rate_2015_USD_KRW * # 15USD TO 15KRW
-        gcamreport::convert$conv_million_trillion, #million to trillion
-      var = "GDP|KRW"
-    ) %>%
-    select(all_of(gcamreport::long_columns))
-
-
 }
 
 
@@ -1416,7 +1395,6 @@ get_co2_price_global_tmp <- function() {
 #' @importFrom dplyr mutate filter select right_join if_else distinct
 #' @importFrom magrittr %>%
 #' @export
-
 get_co2_price_share <- function() {
   var <- year <- region <- value <- . <- sector <-
     CO2_ETS <- CO2 <- scenario <- share_CO2_ETS <- NULL
@@ -1434,8 +1412,6 @@ get_co2_price_share <- function() {
     mutate(var = if_else(var == "Emissions|CO2|Energy and Industrial Processes", "CO2", "CO2_ETS")) %>%
     pivot_wider(names_from = "var", values_from = "value")
 
-
-
   # if CO2_ETS is not present, create a NA column
   if (!("CO2_ETS" %in% colnames(co2_price_share_byreg))) {
     co2_price_share_byreg <<- co2_price_share_byreg %>%
@@ -1450,14 +1426,6 @@ get_co2_price_share <- function() {
       mutate(value = 0) %>%
       select(all_of(gcamreport::long_columns))
   }
-
-#  co2_price_share_byreg <<- co2_price_share_byreg %>%
-#    mutate(CO2_ETS = if_else(is.na(CO2_ETS), 0, CO2_ETS)) %>%
-#    mutate(share_CO2_ETS = CO2_ETS / CO2) %>%
-#    select(scenario, region, year, share_CO2_ETS)
-
-
-
 
   co2_price_share_byreg <<- co2_price_share_byreg %>%
     mutate(CO2_ETS = if_else(is.na(CO2_ETS), 0, CO2_ETS)) %>%
@@ -1519,7 +1487,6 @@ get_co2_price_share <- function() {
 get_co2_price_fragmented_tmp <- function() {
   market <- Units <- regions <- year <- value <- market_adj <- scenario <-
     region <- CO2 <- CO2_ETS <- share_CO2_ETS <- sector <- var <- NULL
-
 
   co2_price_fragmented_pre <<-
     getQuery(prj, "CO2 prices") %>%
