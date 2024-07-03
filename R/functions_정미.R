@@ -391,7 +391,6 @@ get_co2_concentration <- function() {
 }
 
 
-
 #' get_co2
 #'
 #' Get World's CO2 emissions query.
@@ -405,7 +404,6 @@ get_co2_concentration <- function() {
 get_co2 <- function() {
   value <- unit_conv <- scenario <- region <- year <- var <- NULL
 
-
   co2_clean <<-
     as_tibble(getQuery(prj, "CO2 emissions by sector (no bio) (excluding resource production)")) %>%
     left_join(filter_variables(gcamreport::co2_sector_map, "co2_clean"), by = "sector", multiple = "all") %>%
@@ -415,8 +413,6 @@ get_co2 <- function() {
     ungroup() %>%
     select(all_of(gcamreport::long_columns))
 }
-
-
 
 
 #' get_co2_ets

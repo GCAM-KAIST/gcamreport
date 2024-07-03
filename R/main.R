@@ -639,6 +639,8 @@ generate_report <- function(db_path = NULL, db_name = NULL, prj_name, scenarios 
   variables.global <<- merge(variables.global, gcamreport::var_fun_map, by = "name", all = TRUE) %>%
     replace_na(list(required = FALSE))
 
+  #View(variables.global)
+
   # for all desired variables, load the corresponding data
   loaded_internal_variables.global <<- c()
   desired_regions <<- desired_regions

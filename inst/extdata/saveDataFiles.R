@@ -300,10 +300,6 @@ convert <- list(
 )
 use_data(convert, overwrite = T)
 
-gcamreport::convert$conv_million_trillion
-
-gcamreport::convert$conv_90USD_17USD
-gcamreport::convert$CO2_equivalent
 
 # GHG emission conversion
 F_GASES <- c(
