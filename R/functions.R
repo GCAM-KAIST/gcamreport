@@ -150,7 +150,7 @@ conv_ghg_co2e <- function(data) {
 
   # GHG emission conversion
   res <- suppressWarnings(
-    data %>%
+      data %>%
       separate(ghg, into = c("variable", "sector"), sep = "_", fill = "right") %>%
       filter(variable %in% gcamreport::GHG_gases) %>%
       left_join(gcamreport::GWP_adjuster, by = c("variable" = "GHG_gases")) %>%
@@ -232,7 +232,6 @@ get_population <- function() {
     select(all_of(gcamreport::long_columns))
 }
 
-
 #' get_gdp_ppp
 #'
 #' Get GDP (PPP) query, compute regional GDP, and change units to [10USD].
@@ -299,6 +298,7 @@ get_gdp_krw <- function() {
     mutate(
       value = value * gcamreport::convert$conv_90USD_15USD *  # 90USD to 15USD
         gcamreport::convert$exchange_rate_2015_USD_KRW * # 15USD TO 15KRW
+        gcamreport::convert$conv_15KRW_20KRW,  # 15KRW TO 20KRW
         gcamreport::convert$conv_million_trillion, #million to trillion
       var = "GDP|KRW"
     ) %>%
@@ -417,8 +417,6 @@ get_co2 <- function() {
 }
 
 
-
-
 #' get_co2_ets
 #'
 #' Get World's CO2 ETS emissions query.
@@ -514,6 +512,8 @@ get_co2_tech_nobio_tmp <- function() {
 get_co2_tech_emissions_tmp <- function() {
   var <- value <- unit_conv <- scenario <- region <- year <- NULL
 
+#  View(co2_tech_nobio)
+#  unique(co2_tech_emissions$var)
   co2_tech_emissions <<-
     co2_tech_nobio %>%
     left_join(filter_variables(gcamreport::co2_tech_map, "co2_tech_emissions"), by = c("sector", "subsector", "technology"), multiple = "all") %>%
@@ -626,6 +626,7 @@ get_lu_co2 <- function() {
 #' @export
 get_co2_emissions <- function() {
   scenario <- region <- year <- var <- value <- NULL
+
 
   co2_emissions_clean <<-
     bind_rows(co2_clean, LU_carbon_clean, co2_tech_emissions) %>%
@@ -757,8 +758,8 @@ get_ghg_sector <- function() {
     filter(variable %in% gcamreport::GHG_gases) %>%
     rename(ghg = variable) %>%
     left_join(filter_variables(gcamreport::kyoto_sector_map, "ghg_sector_clean"), multiple = "all") %>%
+  bind_rows(
     select(all_of(gcamreport::long_columns)) %>%
-    bind_rows(
       LU_carbon_clean %>%
         mutate(var = "Emissions|Kyoto Gases"),
       LU_carbon_clean %>%
@@ -768,7 +769,6 @@ get_ghg_sector <- function() {
     summarise(value = sum(value, na.rm = T)) %>%
     ungroup()
 }
-
 
 #' get_co2_sequestration
 #'
@@ -894,7 +894,7 @@ get_primary_energy <- function() {
   fuel <- Units <- year <- var <- value <- unit_conv <- scenario <- region <- NULL
 
   primary_energy_clean <<-
-    getQuery(prj, "primary energy consumption with CCS by region (direct equivalent)") %>%
+    getQuery(prj, "primary energy consumption with CCS by region (direct equivalent)") %>% View()
     filter(
       !grepl("water", fuel),
       Units == "EJ"
@@ -1274,6 +1274,8 @@ get_ag_prices_wld_tmp <- function() {
     ungroup() %>%
     mutate(region = "World")
 }
+
+
 
 #' get_ag_prices
 #'
@@ -2693,6 +2695,7 @@ update_template <- function() {
         select(Variable)
     )
   ))
+
 
   template <- data %>%
     select(colnames(gcamreport::template))

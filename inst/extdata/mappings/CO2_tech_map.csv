@@ -168,7 +168,7 @@ resid others,biomass,biomass,,,3.666667
 resid others,coal,coal,Emissions|CO2|Energy|Coal,,3.666667
 resid others,gas,gas,Emissions|CO2|Energy|Gas,,3.666667
 resid others,refined liquids,refined liquids,Emissions|CO2|Energy|Oil,,3.666667
-trn_aviation_intl,International Aviation,Liquids,Emissions|CO2|Energy|Oil,,3.666667
+trn_aviation_intl,International Aviation,Liquids,Emissions|CO2International|InternationalAviation,,3.666667
 trn_freight,Domestic Ship,Hybrid Liquids,Emissions|CO2|Energy|Oil,Emissions|CO2|Energy|Demand|Transportation|Freight|Shipping,3.666667
 trn_freight,Domestic Ship,Liquids,Emissions|CO2|Energy|Oil,Emissions|CO2|Energy|Demand|Transportation|Freight|Shipping,3.666667
 trn_freight,Freight Rail,Coal,Emissions|CO2|Energy|Coal,Emissions|CO2|Energy|Demand|Transportation|Freight|Rail,3.666667
@@ -197,5 +197,5 @@ trn_pass_road_LDV_4W,Large Car and Truck,NG,Emissions|CO2|Energy|Gas,,3.666667
 trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,Emissions|CO2|Energy|Oil,,3.666667
 trn_pass_road_LDV_4W,Mini Car,Liquids,Emissions|CO2|Energy|Oil,,3.666667
 trn_pass_road_LDV_4W,Mini Car,NG,Emissions|CO2|Energy|Gas,,3.666667
-trn_shipping_intl,International Ship,Hybrid Liquids,Emissions|CO2|Energy|Oil,,3.666667
-trn_shipping_intl,International Ship,Liquids,Emissions|CO2|Energy|Oil,,3.666667
+trn_shipping_intl,International Ship,Hybrid Liquids,Emissions|CO2International|InternationalShipping,,3.666667
+trn_shipping_intl,International Ship,Liquids,Emissions|CO2International|InternationalShipping,,3.666667

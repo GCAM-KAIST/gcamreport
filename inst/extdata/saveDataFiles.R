@@ -2,9 +2,12 @@
 library(usethis)
 library(magrittr)
 library(tidyverse)
-
+library(rgcam)
+library(readxl)
+library(writexl)
 ### paths
 rawDataFolder <- here::here()
+
 
 # emissions considered nonCO2
 emissions_list <- c(
@@ -35,7 +38,7 @@ var_fun_map$queries <- as.list(strsplit(var_fun_map$queries, ","))
 use_data(var_fun_map, overwrite = T)
 
 # ghg adjuster
-GWP_adjuster <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "ghg_GWP.csv"),
+GWP_adjuster <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "ghg_GWP_AR5.csv"),
   skip = 1, na = "",
   stringsAsFactors = FALSE
 )
@@ -47,10 +50,12 @@ global_vet_values <- read.csv(file.path(rawDataFolder, "inst/extdata/vetting", "
 )
 use_data(global_vet_values, overwrite = T)
 
+
 # Read in template
 template <- read.csv(file.path(rawDataFolder, "inst/extdata", "template/reporting_template.csv"),
-  fileEncoding = "UTF-8-BOM", stringsAsFactors = FALSE
-)
+  fileEncoding = "UTF-8-BOM", stringsAsFactors = FALSE) %>%
+mutate(Variable = str_replace_all(Variable, "Residential and Commercial", "Building"))  #KMIP
+
 decode_html <- function(text) {
   xml2::xml_text(xml2::read_xml(paste0("<x>", text, "</x>")))
 }
@@ -58,7 +63,9 @@ decode_html <- function(text) {
 template$Unit <- sapply(template$Unit, decode_html)
 use_data(template, overwrite = T)
 
+
 # emissions maps
+
 co2_sector_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "CO2_sector_map.csv"),
   skip = 1, na = "",
   stringsAsFactors = FALSE
@@ -82,6 +89,7 @@ kyoto_sector_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "
   stringsAsFactors = FALSE
 ) %>% gather_map()
 use_data(kyoto_sector_map, overwrite = T)
+
 
 nonco2_emis_sector_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "nonCO2_emissions_sector_map.csv"),
   skip = 1, na = "", stringsAsFactors = FALSE
@@ -169,8 +177,12 @@ use_data(se_gen_map, overwrite = T)
 
 final_energy_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "final_energy_map.csv"),
   skip = 1,
-  stringsAsFactors = FALSE
-) %>% gather_map()
+  stringsAsFactors = FALSE) %>%
+gather_map() %>%
+  mutate(var = str_replace_all(var, "Final Energy\\|Residential and Commercial", "Final Energy|Building"))
+
+
+
 use_data(final_energy_map, overwrite = T)
 
 transport_final_en_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "transport_final_en_map.csv"),
@@ -285,8 +297,8 @@ convert <- list(
 
   conv_90USD_15USD = 100/60.8,
   exchange_rate_2015_USD_KRW = 1130.953,
+  conv_15KRW_20KRW = 1/0.94598,
   conv_million_trillion = 1/1000000,
-
 
   conv_C_CO2 = 44 / 12,
 
@@ -296,7 +308,9 @@ convert <- list(
   bcm_to_EJ = 0.03600,
   GJ_to_EJ = 1.0E9,
   # ghg * CO2_equivalent gives CO2 units
-  CO2_equivalent = 3.666667
+  CO2_equivalent = 3.666667,
+  ##EJ to MTOE - KEMF
+  EJ_to_Mtoe = 23.8846
 )
 use_data(convert, overwrite = T)
 
@@ -332,6 +346,7 @@ use_data(long_columns, overwrite = T)
 
 
 # QUERY files
+
 
 # gcamreport7 queries complete
 queryFile <- file.path(rawDataFolder, "inst/extdata/queries/queries_gcamreport_gcam7.0_general.xml")

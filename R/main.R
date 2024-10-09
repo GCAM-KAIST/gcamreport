@@ -622,7 +622,7 @@ generate_report <- function(db_path = NULL, db_name = NULL, prj_name, scenarios 
 
   # consider only the desired variables
   if (length(desired_variables) == 1 && desired_variables == "All") {
-    variables.global <<- variables_base
+      variables.global <<- variables_base
   } else {
     variables.global <<- variables_base %>%
       mutate(required = if_else(

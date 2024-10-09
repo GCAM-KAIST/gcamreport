@@ -247,6 +247,8 @@ GCAM 7.0,Emissions|CO2|Industrial Processes|Chemicals|Methanol,Mt CO2/yr,
 GCAM 7.0,Emissions|CO2|Industrial Processes|Chemicals|Other,Mt CO2/yr,
 GCAM 7.0,Emissions|CO2|Industrial Processes|Non-ferrous metals,Mt CO2/yr,
 GCAM 7.0,Emissions|CO2|Industrial Processes|Other,Mt CO2/yr,
+GCAM 7.0,Emissions|CO2International|InternationalShipping,Mt CO2/yr,co2_emissions_clean
+GCAM 7.0,Emissions|CO2International|InternationalAviation,Mt CO2/yr,co2_emissions_clean
 GCAM 7.0,Emissions|CO2|Other,Mt CO2/yr,co2_emissions_clean
 GCAM 7.0,Emissions|CO2|Other|DACCS,Mt CO2/yr,co2_emissions_clean
 GCAM 7.0,Emissions|F-Gases,Mt CO2-equiv/yr,f_gas_clean
@@ -262,17 +264,17 @@ GCAM 7.0,Emissions|HFC|HFC43-10,kt HFC43-10/yr,
 GCAM 7.0,Emissions|Kyoto Gases,Mt CO2-equiv/yr,ghg_sector_clean
 GCAM 7.0,Emissions|Kyoto Gases|AFOLU,Mt CO2-equiv/yr,ghg_sector_clean
 GCAM 7.0,Emissions|Kyoto Gases|Buildings,Mt CO2-equiv/yr,ghg_sector_clean
-GCAM 7.0,Emissions|Kyoto Gases|Cement,Mt CO2-equiv/yr,ghg_sector_clean
-GCAM 7.0,Emissions|Kyoto Gases|Chemicals,Mt CO2-equiv/yr,ghg_sector_clean
 GCAM 7.0,Emissions|Kyoto Gases|Electricity,Mt CO2-equiv/yr,ghg_sector_clean
 GCAM 7.0,Emissions|Kyoto Gases|Industry,Mt CO2-equiv/yr,ghg_sector_clean
-GCAM 7.0,Emissions|Kyoto Gases|Non-ferrous Metals,Mt CO2-equiv/yr,ghg_sector_clean
-GCAM 7.0,Emissions|Kyoto Gases|Other,Mt CO2-equiv/yr,ghg_sector_clean
+GCAM 7.0,Emissions|Kyoto Gases|Industry|Cement,Mt CO2-equiv/yr,ghg_sector_clean
+GCAM 7.0,Emissions|Kyoto Gases|Industry|Chemicals,Mt CO2-equiv/yr,ghg_sector_clean
+GCAM 7.0,Emissions|Kyoto Gases|Industry|Steel,Mt CO2-equiv/yr,ghg_sector_clean
+GCAM 7.0,Emissions|Kyoto Gases|Industry|Non-ferrous Metals,Mt CO2-equiv/yr,ghg_sector_clean
+GCAM 7.0,Emissions|Kyoto Gases|Industry|Other Industry,Mt CO2-equiv/yr,ghg_sector_clean
 GCAM 7.0,Emissions|Kyoto Gases|Other Energy Supply,Mt CO2-equiv/yr,ghg_sector_clean
-GCAM 7.0,Emissions|Kyoto Gases|Other Industry,Mt CO2-equiv/yr,ghg_sector_clean
-GCAM 7.0,Emissions|Kyoto Gases|Steel,Mt CO2-equiv/yr,ghg_sector_clean
 GCAM 7.0,Emissions|Kyoto Gases|Supply,Mt CO2-equiv/yr,ghg_sector_clean
 GCAM 7.0,Emissions|Kyoto Gases|Transportation,Mt CO2-equiv/yr,ghg_sector_clean
+GCAM 7.0,Emissions|Kyoto Gases|Other,Mt CO2-equiv/yr,ghg_sector_clean
 GCAM 7.0,Emissions|N2O,kt N2O/yr,nonco2_clean
 GCAM 7.0,Emissions|N2O|AFOLU,kt N2O/yr,nonco2_clean
 GCAM 7.0,Emissions|N2O|Energy,kt N2O/yr,nonco2_clean
@@ -711,9 +713,9 @@ GCAM 7.0,Forestry Demand|Roundwood|Wood Fuel,million m3/yr,
 GCAM 7.0,Forestry Production|Roundwood,million m3/yr,
 GCAM 7.0,Forestry Production|Roundwood|Industrial Roundwood,million m3/yr,
 GCAM 7.0,Forestry Production|Roundwood|Wood Fuel,million m3/yr,
-GCAM 7.0,GDP|MER,billion US$2010/yr,GDP_MER_clean,
-GCAM 7.0,GDP|PPP,billion INT$2017/yr,GDP_PPP_clean,
-GCAM 7.0,GDP|KRW,trillion KRW$2015/yr,mer_krw,
+GCAM 7.0,GDP|MER,billion US$2010/yr,GDP_MER_clean
+GCAM 7.0,GDP|PPP,billion INT$2017/yr,GDP_PPP_clean
+GCAM 7.0,GDP|KRW,trillion KRW$2020/yr,mer_krw
 GCAM 7.0,Indirect Risk|GDP Growth,%,
 GCAM 7.0,Indirect Risk|Public Debt,billion US$2010/yr,
 GCAM 7.0,Investment,billion US$2010/yr,
