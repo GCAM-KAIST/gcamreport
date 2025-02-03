@@ -179,7 +179,7 @@ final_energy_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "
   skip = 1,
   stringsAsFactors = FALSE) %>%
 gather_map() %>%
-  mutate(var = str_replace_all(var, "Final Energy\\|Residential and Commercial", "Final Energy|Building"))
+  mutate(var = gsub("Final Energy\\|Residential and Commercial", "Final Energy|Building", var)) ## jiseok, mapping modified.
 
 
 
@@ -274,7 +274,7 @@ USDbillion2017_to_KRWtrillion2015 <- read.csv(file.path(rawDataFolder, "inst/ext
                         skip = 1,
                         stringsAsFactors = FALSE
 ) %>%
-  select(year, conversion_ratio_2015triKRW)
+  dplyr::select(year, conversion_ratio_2015triKRW)
 
 use_data(USDbillion2017_to_KRWtrillion2015, overwrite = T)
 

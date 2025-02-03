@@ -177,6 +177,7 @@ conv_EJ_GW <- function(data, cf, EJ) {
     mutate(gw = EJ / (cf * gcamreport::convert$hr_per_yr * gcamreport::convert$EJ_to_GWh))
 }
 
+
 #' approx_fun
 #'
 #' Interpolation function
@@ -1933,6 +1934,7 @@ get_cf_iea_tmp <- function() {
     )
 }
 
+
 #' get_elec_cf_tmp
 #'
 #' Calculate future capacity using GCAM
@@ -1965,15 +1967,17 @@ get_elec_cf_tmp <- function() {
     ) %>%
     mutate(cf = replace(cf, !is.na(cf.rgn), cf.rgn[!is.na(cf.rgn)])) %>%
     # second, use iea capacity consistent cf for existing vintage
-    bind_rows(cf_iea_filteredReg) %>%
+  #  bind_rows(cf_iea_filteredReg) %>%    ### JISEOK'S WORK -> cf for 1990~ 2020 goes wrong with this code
     complete(nesting(technology, region), vintage = c(1990, seq(2005, 2100, by = 5))) %>%
     group_by(technology, region) %>%
-    mutate(cf = approx_fun(vintage, cf, rule = 2)) %>%
+    fill(cf, .direction ='updown') %>%
+    #mutate(cf = approx_fun(vintage, cf, rule = 2)) %>%
     ungroup() %>%
     filter(!technology %in% c("existing coal", "add CCS retrofit"))
 
   elec_cf <<- filter_data_regions(elec_cf)
 }
+
 
 #' get_elec_capacity_tot
 #'
@@ -2029,6 +2033,8 @@ get_elec_capacity_tot <- function() {
       select(all_of(gcamreport::long_columns))
   )
 }
+
+
 
 #' get_elec_capacity_add_tmp
 #'
