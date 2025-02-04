@@ -1935,6 +1935,7 @@ get_cf_iea_tmp <- function() {
 }
 
 
+library(tidyverse)
 #' get_elec_cf_tmp
 #'
 #' Calculate future capacity using GCAM
@@ -1970,13 +1971,16 @@ get_elec_cf_tmp <- function() {
   #  bind_rows(cf_iea_filteredReg) %>%    ### JISEOK'S WORK -> cf for 1990~ 2020 goes wrong with this code
     complete(nesting(technology, region), vintage = c(1990, seq(2005, 2100, by = 5))) %>%
     group_by(technology, region) %>%
-    fill(cf, .direction ='updown') %>%
+    fill(cf, .direction ='updown') %>%  ######## JISEOK'S WORK
     #mutate(cf = approx_fun(vintage, cf, rule = 2)) %>%
     ungroup() %>%
     filter(!technology %in% c("existing coal", "add CCS retrofit"))
 
   elec_cf <<- filter_data_regions(elec_cf)
 }
+
+#elec_cf %>% View()
+
 
 
 #' get_elec_capacity_tot
@@ -1995,6 +1999,7 @@ get_elec_capacity_tot <- function() {
 
   elec_capacity_tot_clean <<- suppressWarnings(
     getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>%
+      mutate(technology = gsub("_Korea", "", technology)) %>%
       filter(!output %in% c("electricity", "elect_td_bld")) %>%
       separate(technology, into = c("technology", "vintage"), sep = ",") %>%
       mutate(
@@ -2005,6 +2010,7 @@ get_elec_capacity_tot <- function() {
       summarise(value = sum(value, na.rm = T)) %>%
       ungroup() %>%
       bind_rows(getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>%
+                  mutate(technology = gsub("_Korea", "", technology)) %>%
         filter(output %in% c("electricity", "elect_td_bld")) %>%
         separate(technology, into = c("technology", "vintage"), sep = ",") %>%
         mutate(vintage = as.integer(sub("year=", "", vintage))) %>%
@@ -2034,7 +2040,7 @@ get_elec_capacity_tot <- function() {
   )
 }
 
-
+#elec_capacity_tot_clean %>% View()
 
 #' get_elec_capacity_add_tmp
 #'

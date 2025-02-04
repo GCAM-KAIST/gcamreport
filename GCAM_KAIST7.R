@@ -9,15 +9,19 @@ available_variables()
 
 # develop
 
-
-
+######
+### JISEOK'S NOTE
+### HOW TO GET CAPACITY Value
+### set desired_variables : 'Capacity|Electricity*", 'Secondary Energy|*"
+### solve variables.global issue
+### rerun generate_report
 
 generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path to database under gcamreport folder
-                db_name = "testdb",   # db folder name
+                db_name = #'testdb',
+                  "nzM1_cons_KMIP24",   # db folder name
                 scenarios = c(
-  #                'Reference'
-                  'NZ_Electricity_Nuc_Policy'
-                  #'nzM1_DACSSP2_Consv_Nuc_Extrapolation'
+                  #'Reference'
+                  'nzM1_cons_ATB22_MoreDAC20'
                   ), ## scenario names
                 prj_name = "GCAM-KAIST7.dat", final_year = 2050,
                 desired_regions = c('South Korea'#, 'Japan'
@@ -52,20 +56,36 @@ generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path
 
 
 
+
+
+
+
+
+
+
+####################### belows are not in use
+
+
 ### GCAM-KAIST7 Netzero scenario
 
+### Gen_III (seawater),year=2035
+### Gen_III_Korea,year=2025
+#elec_cf %>% View()
 
-getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>%
-  filter(!output %in% c("electricity", "elect_td_bld")) %>%
+
+getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>% #distinct(technology) %>% View()
+mutate(technology = gsub("_Korea", "", technology)) %>% # distinct(technology) %>% View()
+filter(!output %in% c("electricity", "elect_td_bld")) %>%
   separate(technology, into = c("technology", "vintage"), sep = ",") %>%
   mutate(
     vintage = as.integer(sub("year=", "", vintage)),
     output = gsub("elec_", "", output)
   ) %>%
-  group_by(scenario, region, technology = output, vintage, year) %>%
+    group_by(scenario, region, technology = output, vintage, year) %>%
   summarise(value = sum(value, na.rm = T)) %>%
   ungroup() %>%
   bind_rows(getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>%
+              mutate(technology = gsub("_Korea", "", technology)) %>%
               filter(output %in% c("electricity", "elect_td_bld")) %>%
               separate(technology, into = c("technology", "vintage"), sep = ",") %>%
               mutate(vintage = as.integer(sub("year=", "", vintage))) %>%
@@ -75,13 +95,11 @@ getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>%
   left_join(elec_cf, by = c("region", "technology", "vintage")) %>%
   mutate(EJ = value) %>%
   conv_EJ_GW() %>%
-  mutate(gw = round(gw ,1)) %>% View()
   group_by(scenario, region, technology, year) %>%
   summarise(value = sum(gw, na.rm = T)) %>%
   ungroup() %>%
-  mutate(value = round (value,1)) %>% View()
-  #mutate(GW = round(value,1)) %>%
-left_join(filter_variables(gcamreport::capacity_map, "elec_capacity_tot_clean") %>% select(-output), by = c("technology"), multiple = "all") %>%
+  #mutate(value = round(value,1)) %>% View()
+  left_join(filter_variables(gcamreport::capacity_map, "elec_capacity_tot_clean") %>% select(-output), by = c("technology"), multiple = "all") %>%
   filter(!is.na(var)) %>%
   mutate(
     value = value * unit_conv,
@@ -95,8 +113,10 @@ left_join(filter_variables(gcamreport::capacity_map, "elec_capacity_tot_clean") 
            fill = list(value = 0)
   ) %>%
   select(all_of(gcamreport::long_columns))
-)
 
+filter_variables
+
+filter_variables(gcamreport::capacity_map, "elec_capacity_tot_clean")
 
 View(elec_cf)
 
