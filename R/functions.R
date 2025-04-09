@@ -895,7 +895,7 @@ get_primary_energy <- function() {
   fuel <- Units <- year <- var <- value <- unit_conv <- scenario <- region <- NULL
 
   primary_energy_clean <<-
-    getQuery(prj, "primary energy consumption with CCS by region (direct equivalent)") %>% View()
+    getQuery(prj, "primary energy consumption with CCS by region (direct equivalent)") %>%
     filter(
       !grepl("water", fuel),
       Units == "EJ"
@@ -1934,6 +1934,8 @@ get_cf_iea_tmp <- function() {
     )
 }
 
+
+#cf_iea %>% View()
 
 library(tidyverse)
 #' get_elec_cf_tmp

@@ -28,14 +28,16 @@ generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path
                                     ),
                 #desired_variables = available_variables(), ## all available variable
                desired_variables = c(
-                 "Capacity|Electricity*",
+                 "Final Energy*"
+                # "Carbon Sequestration*"
+                # "Capacity|Electricity*",
                  #"Capacity Additions*"
                   #'Agricultural*',
               #    'Emissions|CO2|Energy|Supply*'
                 #  'Carbon Sequestration*',
                   # 'Fertilizer',
                   #'Primary Energy*'
-                  'Secondary Energy*'
+                 # 'Secondary Energy*'
               #    'Final Energy*'
                  # 'GDP|MER',  # MER in $2010USD
                   #"GDP|PPP",  # PPP in $2017USD,
@@ -73,7 +75,7 @@ generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path
 #elec_cf %>% View()
 
 
-getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>% #distinct(technology) %>% View()
+data<- getQuery(prj, "elec gen by gen tech and cooling tech and vintage") %>% #distinct(technology) %>% View()
 mutate(technology = gsub("_Korea", "", technology)) %>% # distinct(technology) %>% View()
 filter(!output %in% c("electricity", "elect_td_bld")) %>%
   separate(technology, into = c("technology", "vintage"), sep = ",") %>%
@@ -113,6 +115,48 @@ filter(!output %in% c("electricity", "elect_td_bld")) %>%
            fill = list(value = 0)
   ) %>%
   select(all_of(gcamreport::long_columns))
+
+data<-data %>%
+  filter(year>=2005) %>%
+  mutate(var= gsub('Capacity\\|', '', var))
+
+data
+unique(data$var)[c(3,4,6,8,9,10,11,12,14,15,18,19)]->var_selected
+
+var_selected
+
+library(cowplot)
+a<-data %>%
+  filter(var %in% var_selected) %>%
+  ggplot(aes(x = year, y = value, fill= var))+
+  geom_col()+
+  stat_summary(fun = sum, aes(label = round(..y.., 1), group = year),
+                          geom = "text",  vjust = -1, family ='Nanum Myeongjo')+
+  theme_cowplot()+
+  theme(legend.position = c(0.03, 0.8))+
+  labs(y = 'Capacity(GW)',
+       x = '')+
+  scale_x_continuous( breaks = c(seq(2005,2050, 10), 2050))
+a
+
+library(ggh4x)
+b<-data %>%
+  filter(var %in% var_selected) %>%
+  ggplot(aes(x = year, y = value, fill= var))+
+  geom_col()+
+  geom_text(aes(label = round(value,0)), vjust = -1)+
+  facet_wrap2(~var, nrow = 3, axes = 'x')+
+  theme_cowplot()+
+  theme(legend.position="none",
+        strip.text.x = element_text(size = 12),
+        axis.text.x = element_text(size = 10, angle =45, hjust = 1))+
+  labs(y = 'Capacity(GW)',
+       x = '')+
+  scale_x_continuous( breaks = c(seq(2005,2050, 10), 2050))
+
+
+#library(patchwork)
+a+b+ plot_layout(widths = c(1, 3))
 
 filter_variables
 

@@ -54,7 +54,30 @@ use_data(global_vet_values, overwrite = T)
 # Read in template
 template <- read.csv(file.path(rawDataFolder, "inst/extdata", "template/reporting_template.csv"),
   fileEncoding = "UTF-8-BOM", stringsAsFactors = FALSE) %>%
-mutate(Variable = str_replace_all(Variable, "Residential and Commercial", "Building"))  #KMIP
+mutate(Variable = str_replace_all(Variable, "Residential and Commercial", "Building"),
+       Variable = str_replace_all(Variable, "Gases", "Gas"),
+       Variable = str_replace_all(Variable, "Commercial", "Commercial/Public"),
+       Variable = str_replace_all(Variable, "Aviation", "Air"),
+       Variable = str_replace_all(Variable, "Primary Energy\\|Non-Biomass Renewables\\|Solar", "Primary Energy|Solar"),
+       Variable = str_replace_all(Variable, "Primary Energy\\|Non-Biomass Renewables\\|Wind", "Primary Energy|Wind"),
+      Variable = str_replace_all(Variable, "Secondary Energy\\|Hydrogen", "Secondary Energy|Electricity|Hydrogen"),
+      Variable = str_replace_all(Variable, "Final Energy\\|Industry\\|Solids\\|Biomass", "Final Energy|Industry|Biomass"),
+      Variable = str_replace_all(Variable, "Final Energy\\|Industry\\|Solids\\|Coal", "Final Energy|Industry|Coal"),
+      Variable = str_replace_all(Variable, "Final Energy\\|Industry\\|Liquids", "Final Energy|Industry|Oil"),
+      Variable = str_replace_all(Variable, "Final Energy\\|Building\\|Residential\\|Liquids", "Final Energy|Building|Residential|Oil"),
+      Variable = str_replace_all(Variable, "Final Energy\\|Building\\|Liquids", "Final Energy|Building|Oil"),
+      Variable = str_replace_all(Variable, "Final Energy\\|Building\\|Commercial/Public\\|Liquids", "Final Energy|Building|Commercial/Public|Oil"),
+      Variable = str_replace_all(Variable, "Final Energy\\|Solids\\|Biomass", "Final Energy|Biomass"),
+      Variable = str_replace_all(Variable, "Final Energy\\|Liquids", "Final Energy|Oil"),
+
+       )  #250409 Request from Ahmed  GCAMREPORT-MI Comparison
+
+
+
+
+
+
+
 
 decode_html <- function(text) {
   xml2::xml_text(xml2::read_xml(paste0("<x>", text, "</x>")))
@@ -128,12 +151,25 @@ land_use_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "land
 use_data(land_use_map, overwrite = T)
 
 
+
+
+
+
+
 # primary, secondary, final energy maps
 primary_energy_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "en_primary_map.csv"),
   skip = 1,
   stringsAsFactors = FALSE
-) %>% gather_map()
+) %>% gather_map() %>%
+  mutate(var = str_replace_all(var, "Primary Energy\\|Non-Biomass Renewables\\|Solar", "Primary Energy|Solar"),
+        var = str_replace_all(var, "Primary Energy\\|Non-Biomass Renewables\\|Wind", "Primary Energy|Wind"))
+
+
+
 use_data(primary_energy_map, overwrite = T)
+
+
+
 
 production_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "production_map.csv"),
   skip = 1,
@@ -175,11 +211,27 @@ se_gen_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "second
 ) %>% gather_map()
 use_data(se_gen_map, overwrite = T)
 
+
+
+
+
+
+
+
+
+
 final_energy_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "final_energy_map.csv"),
   skip = 1,
   stringsAsFactors = FALSE) %>%
 gather_map() %>%
-  mutate(var = gsub("Final Energy\\|Residential and Commercial", "Final Energy|Building", var)) ## jiseok, mapping modified.
+  mutate(var = str_replace_all(var, "Final Energy\\|Industry\\|Solids\\|Biomass", "Final Energy|Industry|Biomass"),
+         var = str_replace_all(var, "Final Energy\\|Industry\\|Solids\\|Coal", "Final Energy|Industry|Coal"),
+         var = str_replace_all(var, "Final Energy\\|Industry\\|Liquids", "Final Energy|Industry|Oil"),
+         var = str_replace_all(var, "Final Energy\\|Building\\|Residential\\|Liquids", "Final Energy|Building|Residential|Oil"),
+         var = str_replace_all(var, "Final Energy\\|Building\\|Liquids", "Final Energy|Building|Oil"),
+         var = str_replace_all(var, "Final Energy\\|Building\\|Commercial/Public\\|Liquids", "Final Energy|Building|Commercial/Public|Oil"),
+         var = str_replace_all(var, "Final Energy\\|Solids\\|Biomass", "Final Energy|Biomass"),
+         var = str_replace_all(var, "Final Energy\\|Liquids", "Final Energy|Oil"))  #250409 Request from Ahmed  GCAMREPORT-MI Comparison
 
 
 
