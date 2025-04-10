@@ -28,7 +28,8 @@ generate_report(db_path ="E:/gcam-v7.0-Windows-Release-Package_GGS621/",  # path
                                     ),
                 #desired_variables = available_variables(), ## all available variable
                desired_variables = c(
-                 "Final Energy*"
+                 "Final Energy*",
+                 "Primary Energy*"
                 # "Carbon Sequestration*"
                 # "Capacity|Electricity*",
                  #"Capacity Additions*"

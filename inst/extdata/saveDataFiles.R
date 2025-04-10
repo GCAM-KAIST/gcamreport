@@ -224,7 +224,11 @@ final_energy_map <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings", "
   skip = 1,
   stringsAsFactors = FALSE) %>%
 gather_map() %>%
-  mutate(var = str_replace_all(var, "Final Energy\\|Industry\\|Solids\\|Biomass", "Final Energy|Industry|Biomass"),
+  mutate(var = str_replace_all(var, "Residential and Commercial", "Building"),
+         var = str_replace_all(var, "Commercial", "Commercial/Public"),
+         var = str_replace_all(var, "Gases", "Gas"),
+         var = str_replace_all(var, "Aviation", "Air"),
+         var = str_replace_all(var, "Final Energy\\|Industry\\|Solids\\|Biomass", "Final Energy|Industry|Biomass"),
          var = str_replace_all(var, "Final Energy\\|Industry\\|Solids\\|Coal", "Final Energy|Industry|Coal"),
          var = str_replace_all(var, "Final Energy\\|Industry\\|Liquids", "Final Energy|Industry|Oil"),
          var = str_replace_all(var, "Final Energy\\|Building\\|Residential\\|Liquids", "Final Energy|Building|Residential|Oil"),
@@ -232,6 +236,7 @@ gather_map() %>%
          var = str_replace_all(var, "Final Energy\\|Building\\|Commercial/Public\\|Liquids", "Final Energy|Building|Commercial/Public|Oil"),
          var = str_replace_all(var, "Final Energy\\|Solids\\|Biomass", "Final Energy|Biomass"),
          var = str_replace_all(var, "Final Energy\\|Liquids", "Final Energy|Oil"))  #250409 Request from Ahmed  GCAMREPORT-MI Comparison
+
 
 
 
