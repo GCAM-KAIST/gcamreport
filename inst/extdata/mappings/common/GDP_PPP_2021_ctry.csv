@@ -1,0 +1,223 @@
+# File: GDP_PPP_2021_ctry.csv
+# Title: GDP at PPP in 2021 by country, the target GDP|PPP is calibrated to
+# Units: billion USD 2021 (international $, PPP)
+# Source: WB = World Bank WDI NY.GDP.MKTP.PP.KD (constant 2021 international $), retrieved 2026-10-06;
+#   SSP = countries the World Bank has no 2021 value for (Venezuela, Taiwan, North Korea, Cuba, Yemen, ...):
+#   SSP_database_2025 (OECD ENV-Growth 2025, Historical Reference) GDP|PPP in USD 2017, 2021 interpolated
+#   between the nearest years with data, converted to USD 2021 with the US GDP deflator.
+#   GCAM_region: gcamdata GCAM 9.1 (iso_GCAM_regID, GCAM_region_names).
+# Built by: prepare_GDP_PPP_2021_ctry.R in this folder
+# ----------
+iso,country,GCAM_region,value,source
+bdi,Burundi,Africa_Eastern,13.385,WB
+com,Comoros,Africa_Eastern,2.822,WB
+dji,Djibouti,Africa_Eastern,6.683,WB
+eri,Eritrea,Africa_Eastern,6.953,SSP
+eth,Ethiopia,Africa_Eastern,316.145,WB
+ken,Kenya,Africa_Eastern,284.129,WB
+mdg,Madagascar,Africa_Eastern,46.836,WB
+mus,Mauritius,Africa_Eastern,29.139,WB
+rwa,Rwanda,Africa_Eastern,37.079,WB
+sdn,Sudan,Africa_Eastern,156.168,WB
+som,Somalia,Africa_Eastern,24.047,WB
+ssd,South Sudan,Africa_Eastern,6.111,SSP
+uga,Uganda,Africa_Eastern,123.267,WB
+dza,Algeria,Africa_Northern,648.896,WB
+egy,Egypt,Africa_Northern,1728.601,WB
+esh,Western Sahara,Africa_Northern,1.119,SSP
+lby,Libyan Arab Jamahiriya,Africa_Northern,90.199,WB
+mar,Morocco,Africa_Northern,323.485,WB
+tun,Tunisia,Africa_Northern,149.937,WB
+ago,Angola,Africa_Southern,301.129,WB
+bwa,Botswana,Africa_Southern,43.131,WB
+lso,Lesotho,Africa_Southern,5.755,WB
+moz,Mozambique,Africa_Southern,46.206,WB
+mwi,Malawi,Africa_Southern,33.832,WB
+nam,Namibia,Africa_Southern,27.288,WB
+swz,Swaziland,Africa_Southern,12.054,WB
+tza,"Tanzania, United Republic of",Africa_Southern,212.79,WB
+zmb,Zambia,Africa_Southern,68.672,WB
+zwe,Zimbabwe,Africa_Southern,76.255,WB
+ben,Benin,Africa_Western,46.468,WB
+bfa,Burkina Faso,Africa_Western,54.69,WB
+caf,Central African Republic,Africa_Western,5.769,WB
+civ,Cote dIvoire,Africa_Western,179.178,WB
+cmr,Cameroon,Africa_Western,129.022,WB
+cod,"Congo, the Democratic Republic of the",Africa_Western,139.045,WB
+cog,Congo,Africa_Western,36.904,WB
+cpv,Cape Verde,Africa_Western,3.971,WB
+gab,Gabon,Africa_Western,44.025,WB
+gha,Ghana,Africa_Western,214.867,WB
+gin,Guinea,Africa_Western,51.261,WB
+gmb,Gambia,Africa_Western,7.156,WB
+gnb,Guinea-Bissau,Africa_Western,5.193,WB
+gnq,Equatorial Guinea,Africa_Western,29.585,WB
+lbr,Liberia,Africa_Western,8.095,WB
+mli,Mali,Africa_Western,62.604,WB
+mrt,Mauritania,Africa_Western,27.635,WB
+ner,Niger,Africa_Western,38.906,WB
+nga,Nigeria,Africa_Western,1658.305,WB
+sen,Senegal,Africa_Western,71.874,WB
+sle,Sierra Leone,Africa_Western,23.065,WB
+stp,Sao Tome and Principe,Africa_Western,1.272,WB
+tcd,Chad,Africa_Western,43.413,WB
+tgo,Togo,Africa_Western,23.428,WB
+arg,Argentina,Argentina,1191.725,WB
+aus,Australia,Australia_NZ,1498.164,WB
+nzl,New Zealand,Australia_NZ,245.088,WB
+bra,Brazil,Brazil,3787.77,WB
+can,Canada,Canada,2179.485,WB
+abw,Aruba,Central America and Caribbean,3.792,WB
+atg,Antigua & Barbuda,Central America and Caribbean,2.378,WB
+bhs,Bahamas,Central America and Caribbean,12.313,WB
+blz,Belize,Central America and Caribbean,4.632,WB
+bmu,Bermuda,Central America and Caribbean,5.968,WB
+brb,Barbados,Central America and Caribbean,4.99,WB
+cri,Costa Rica,Central America and Caribbean,121.863,WB
+cub,Cuba,Central America and Caribbean,79.363,SSP
+cuw,Curacao,Central America and Caribbean,3.834,WB
+cym,Cayman Islands,Central America and Caribbean,5.199,WB
+dma,Dominica,Central America and Caribbean,1.062,WB
+dom,Dominican Republic,Central America and Caribbean,245.311,WB
+grd,Grenada,Central America and Caribbean,1.784,WB
+gtm,Guatemala,Central America and Caribbean,208.107,WB
+hnd,Honduras,Central America and Caribbean,63.828,WB
+hti,Haiti,Central America and Caribbean,35.45,WB
+jam,Jamaica,Central America and Caribbean,29.599,WB
+kna,Saint Kitts and Nevis,Central America and Caribbean,1.258,WB
+lca,Saint Lucia,Central America and Caribbean,3.417,WB
+nic,Nicaragua,Central America and Caribbean,47.305,WB
+pan,Panama,Central America and Caribbean,134.415,WB
+slv,El Salvador,Central America and Caribbean,67.623,WB
+sxm,Sint Maarten,Central America and Caribbean,1.684,WB
+tto,Trinidad and Tobago,Central America and Caribbean,41.686,WB
+vct,Saint Vincent and the Grenadines,Central America and Caribbean,1.666,WB
+arm,Armenia,Central Asia,47.165,WB
+aze,Azerbaijan,Central Asia,203.884,WB
+geo,Georgia,Central Asia,70.151,WB
+kaz,Kazakhstan,Central Asia,650.47,WB
+kgz,Kyrgyzstan,Central Asia,39.302,WB
+mng,Mongolia,Central Asia,50.053,WB
+tjk,Tajikistan,Central Asia,39.727,WB
+tkm,Turkmenistan,Central Asia,115.316,WB
+uzb,Uzbekistan,Central Asia,332.356,WB
+chn,China,China,29438.24,WB
+hkg,Hong Kong,China,488.412,WB
+mac,Macau,China,50.078,WB
+col,Colombia,Colombia,889.809,WB
+bgr,Bulgaria,EU-12,201.459,WB
+cyp,Cyprus,EU-12,43.923,WB
+cze,Czech Republic,EU-12,502.134,WB
+est,Estonia,EU-12,58.89,WB
+hun,Hungary,EU-12,374.52,WB
+ltu,Lithuania,EU-12,128.897,WB
+lva,Latvia,EU-12,69.56,WB
+mlt,Malta,EU-12,29.443,WB
+pol,Poland,EU-12,1518.447,WB
+rom,Romania,EU-12,717.727,WB
+svk,Slovakia,EU-12,208.795,WB
+svn,Slovenia,EU-12,96.809,WB
+and,Andorra,EU-15,4.65,WB
+aut,Austria,EU-15,563.936,WB
+bel,Belgium,EU-15,702.925,WB
+deu,Germany,EU-15,5210.635,WB
+dnk,Denmark,EU-15,406.036,WB
+esp,Spain,EU-15,2099.468,WB
+fin,Finland,EU-15,314.676,WB
+fra,France,EU-15,3562.924,WB
+fro,Faroe Islands,EU-15,3.647,WB
+gbr,United Kingdom,EU-15,3472.169,WB
+grc,Greece,EU-15,354.398,WB
+grl,Greenland,EU-15,3.926,WB
+irl,Ireland,EU-15,596.42,WB
+ita,Italy,EU-15,2946.334,WB
+lux,Luxembourg,EU-15,87.543,WB
+nld,Netherlands,EU-15,1202.303,WB
+prt,Portugal,EU-15,400.564,WB
+smr,San Marino,EU-15,2.218,WB
+swe,Sweden,EU-15,647.768,WB
+tca,Turks and Caicos,EU-15,1.134,WB
+alb,Albania,Europe_Non_EU,45.346,WB
+bih,Bosnia and Herzegovina,Europe_Non_EU,59.339,WB
+blr,Belarus,Europe_Non_EU,256.855,WB
+hrv,Croatia,Europe_Non_EU,143.251,WB
+mda,"Moldova, Republic of",Europe_Non_EU,40.708,WB
+mkd,"Macedonia, the former Yugoslav Republic of",Europe_Non_EU,40.681,WB
+mne,Montenegro,Europe_Non_EU,14.807,WB
+srb,Serbia,Europe_Non_EU,159.966,WB
+tur,Turkey,Europe_Non_EU,2701.596,WB
+xkx,Kosovo,Europe_Non_EU,22.08,WB
+che,Switzerland,European Free Trade Association,727.047,WB
+isl,Iceland,European Free Trade Association,23.365,WB
+nor,Norway,European Free Trade Association,498.678,WB
+ind,India,India,11057.175,WB
+idn,Indonesia,Indonesia,3530.623,WB
+jpn,Japan,Japan,5781.286,WB
+mex,Mexico,Mexico,2652.859,WB
+are,United Arab Emirates,Middle East,656.665,WB
+bhr,Bahrain,Middle East,82.672,WB
+irn,"Iran, Islamic Republic of",Middle East,1405.065,WB
+irq,Iraq,Middle East,548.372,WB
+isr,Israel,Middle East,432.5,WB
+jor,Jordan,Middle East,111.289,WB
+kwt,Kuwait,Middle East,220.886,WB
+lbn,Lebanon,Middle East,66.329,WB
+omn,Oman,Middle East,174.254,WB
+pse,"Palestinian Territory, Occupied",Middle East,27.878,WB
+qat,Qatar,Middle East,292.655,WB
+sau,Saudi Arabia,Middle East,1929.888,WB
+syr,Syrian Arab Republic,Middle East,103.073,WB
+yem,Yemen,Middle East,64.149,SSP
+pak,Pakistan,Pakistan,1285.343,WB
+rus,Russian Federation,Russia,5688.268,WB
+zaf,South Africa,South Africa,841.476,WB
+guf,French Guiana,South America_Northern,12.523,SSP
+guy,Guyana,South America_Northern,18.647,WB
+sur,Suriname,South America_Northern,11.405,WB
+ven,Venezuela,South America_Northern,155.996,SSP
+bol,Bolivia,South America_Southern,133.728,WB
+chl,Chile,South America_Southern,566.308,WB
+ecu,Ecuador,South America_Southern,238.845,WB
+per,Peru,South America_Southern,506.813,WB
+pry,Paraguay,South America_Southern,102.943,WB
+ury,Uruguay,South America_Southern,99.971,WB
+afg,Afghanistan,South Asia,85.768,WB
+bgd,Bangladesh,South Asia,1247.561,WB
+btn,Bhutan,South Asia,10.437,WB
+lka,Sri Lanka,South Asia,317.188,WB
+mdv,Maldives,South Asia,9.834,WB
+npl,Nepal,South Asia,134,WB
+kor,"Korea, Republic of",South Korea,2677.43,WB
+brn,Brunei Darussalam,Southeast Asia,35.347,WB
+fji,Fiji,Southeast Asia,9.463,WB
+fsm,"Micronesia, Federated States of",Southeast Asia,0.442,WB
+gum,Guam,Southeast Asia,4.68,SSP
+khm,Cambodia,Southeast Asia,105.674,WB
+kir,Kiribati,Southeast Asia,0.388,WB
+lao,Lao Peoples Democratic Republic,Southeast Asia,60.225,WB
+mhl,Marshall Islands,Southeast Asia,0.28,WB
+mmr,Myanmar,Southeast Asia,276.462,WB
+mys,Malaysia,Southeast Asia,1022.399,WB
+myt,Mayotte,Southeast Asia,7.733,SSP
+ncl,New Caledonia,Southeast Asia,8.136,SSP
+nru,Nauru,Southeast Asia,0.142,WB
+phl,Philippines,Southeast Asia,1001.824,WB
+plw,Palau,Southeast Asia,0.29,WB
+png,Papua New Guinea,Southeast Asia,39.826,WB
+prk,"Korea, Democratic Peoples Republic of",Southeast Asia,54.582,SSP
+pyf,French Polynesia,Southeast Asia,5.267,SSP
+sgp,Singapore,Southeast Asia,730.724,WB
+slb,Solomon Islands,Southeast Asia,1.868,WB
+syc,Seychelles,Southeast Asia,2.976,WB
+tha,Thailand,Southeast Asia,1451.544,WB
+tls,Timor Leste,Southeast Asia,9.215,WB
+ton,Tonga,Southeast Asia,0.731,WB
+tuv,Tuvalu,Southeast Asia,0.057,WB
+vnm,Viet Nam,Southeast Asia,1192.059,WB
+vut,Vanuatu,Southeast Asia,1.085,WB
+wsm,Samoa,Southeast Asia,1.358,WB
+twn,Taiwan,Taiwan,1425.085,SSP
+pri,Puerto Rico,USA,132.334,WB
+usa,United States of America,USA,23725.645,WB
+vir,"Virgin Islands, U.S.",USA,4.965,WB
+ukr,Ukraine,Ukraine,746.471,WB
