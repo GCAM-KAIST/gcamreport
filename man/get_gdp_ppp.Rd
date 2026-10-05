@@ -14,6 +14,7 @@ get_gdp_ppp(GCAM_version = "v8.2")
 }
 \description{
 Retrieves GDP (PPP) data, computes regional GDP and annual GDPpc growth rate, and converts units to 10 USD.
+Each region is scaled so that 2021 reproduces GDP at PPP from the World Bank (`gdp_ppp_2021_region`).
 }
 \keyword{econ}
 \keyword{internal}

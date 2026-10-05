@@ -10,6 +10,15 @@ rawDataFolder <- here::here()
 GDP_PPP_OECD_pc_av <- 55.142 # US dollar 2024
 use_data(GDP_PPP_OECD_pc_av, overwrite = T)
 
+# GDP|PPP calibration target: GDP at PPP in 2021 by GCAM region, billion USD 2010
+# (mappings/common/GDP_PPP_2021_ctry.csv: World Bank, SSP database where the World Bank has no value)
+conv_21USD_10USD <- 88.556 / 110.213 # US GDP deflator (BEA A191RD3A086NBEA), as in gcamdata gdp_deflator()
+gdp_ppp_2021_region <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings/common", "GDP_PPP_2021_ctry.csv"),
+                                comment.char = "#") %>%
+  dplyr::group_by(region = GCAM_region) %>%
+  dplyr::summarise(gdp_ppp_2021 = sum(value) * conv_21USD_10USD, .groups = "drop")
+use_data(gdp_ppp_2021_region, overwrite = T)
+
 # Reference scenario names
 # List all possible default names for the Reference scenario
 scen_ref_patterns <- c('Reference','Baseline','Ref','Base')

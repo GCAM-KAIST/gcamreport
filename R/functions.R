@@ -748,6 +748,21 @@ conv_EJ_GW <- function(data, cf, EJ, GCAM_version = 'v8.2') {
                                get(paste('convert',GCAM_version,sep='_'), envir = asNamespace("gcamreport"))[['EJ_to_GWh']]))
 }
 
+#' value_at
+#'
+#' Linear interpolation of a series at one point.
+#'
+#' @param year Years of the series.
+#' @param value Values of the series.
+#' @param at Year to interpolate at.
+#' @return The interpolated value, or NA when the series has fewer than two values.
+#' @noRd
+value_at <- function(year, value, at) {
+  ok <- !is.na(value)
+  if (sum(ok) < 2) return(NA_real_)
+  stats::approx(year[ok], value[ok], xout = at)$y
+}
+
 #' approx_fun
 #'
 #' Performs interpolation or extrapolation on given values.
@@ -1187,6 +1202,7 @@ get_labor <- function(GCAM_version = 'v8.2') {
 #' get_gdp_ppp
 #'
 #' Retrieves GDP (PPP) data, computes regional GDP and annual GDPpc growth rate, and converts units to 10 USD.
+#' Each region is scaled so that 2021 reproduces GDP at PPP from the World Bank (`gdp_ppp_2021_region`).
 #'
 #' @param GCAM_version Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.
 #' @return `GDP_PPP_clean`, `GDP_PPP_pc_growth_clean`, and `GDP_PPP_pc_oecd_share_clean` global variables.
@@ -1195,17 +1211,29 @@ get_labor <- function(GCAM_version = 'v8.2') {
 #' @export
 get_gdp_ppp <- function(GCAM_version = 'v8.2') {
   value <- pop_mill <- GDP_PPP_clean <- GDP_PPP_pc_growth_clean <-
-    GDP_PPP_pc_oecd_share_clean <- NULL
+    GDP_PPP_pc_oecd_share_clean <- gdp_2021 <- gdp_ppp_2021 <- NULL
 
   check_queries('GDP_PPP_clean', GCAM_version)
   check_queries('GDP_PPP_pc_growth_clean', GCAM_version)
   check_queries('GDP_PPP_pc_oecd_share_clean', GCAM_version)
 
-  GDP_PPP_clean <-
+  # GDP per capita PPP, scaled by region so that 2021 reproduces the World Bank GDP at PPP;
+  # a region without a target keeps GCAM's value
+  gdp_ppp_pc <-
     check_inf(rgcam::getQuery(prj, "GDP per capita PPP by region"),
               dataset_name = "GDP per capita PPP by region") %>%
     dplyr::filter(value != 0) %>% # avoid null values present in the data due to the byu
     left_join_error_no_match(population_clean %>% dplyr::rename(pop_mill = value), by = c("scenario", "region", "year")) %>%
+    dplyr::group_by(scenario, region) %>%
+    dplyr::mutate(gdp_2021 = value_at(year, value * pop_mill, 2021) *
+                    get(paste('convert',GCAM_version,sep='_'), envir = asNamespace("gcamreport"))[['conv_90USD_10USD']]) %>%
+    dplyr::ungroup() %>%
+    dplyr::left_join(get('gdp_ppp_2021_region', envir = asNamespace("gcamreport")), by = "region") %>%
+    dplyr::mutate(value = value * dplyr::coalesce(gdp_ppp_2021 / gdp_2021, 1)) %>%
+    dplyr::select(-gdp_2021, -gdp_ppp_2021)
+
+  GDP_PPP_clean <-
+    gdp_ppp_pc %>%
     dplyr::mutate(
       value = value * pop_mill * get(paste('convert',GCAM_version,sep='_'), envir = asNamespace("gcamreport"))[['conv_90USD_10USD']],
       var = "GDP|PPP"
@@ -1213,9 +1241,8 @@ get_gdp_ppp <- function(GCAM_version = 'v8.2') {
     dplyr::select(dplyr::all_of(gcamreport::long_columns))
 
   GDP_PPP_pc_growth_clean <-
-    check_inf(rgcam::getQuery(prj, "GDP per capita PPP by region"),
-              dataset_name = "GDP per capita PPP by region") %>%
-    dplyr::filter(value != 0) %>% # avoid null values present in the data due to the byu
+    gdp_ppp_pc %>%
+    dplyr::select(-pop_mill) %>%
     dplyr::arrange(year) %>%
     tibble::as_tibble() %>%
     dplyr::group_by(scenario, region) %>%
@@ -1229,9 +1256,8 @@ get_gdp_ppp <- function(GCAM_version = 'v8.2') {
     dplyr::select(dplyr::all_of(gcamreport::long_columns))
 
   GDP_PPP_pc_oecd_share_clean <-
-    check_inf(rgcam::getQuery(prj, "GDP per capita PPP by region"),
-              dataset_name = "GDP per capita PPP by region") %>%
-    dplyr::filter(value != 0) %>% # avoid null values present in the data due to the byu
+    gdp_ppp_pc %>%
+    dplyr::select(-pop_mill) %>%
     dplyr::arrange(year) %>%
     tibble::as_tibble() %>%
     dplyr::mutate(

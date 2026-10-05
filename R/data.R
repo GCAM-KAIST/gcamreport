@@ -10,6 +10,19 @@
 #' }
 "GCAM_regions_number"
 
+#' gdp_ppp_2021_region
+#'
+#' @source World Bank WDI NY.GDP.MKTP.PP.KD; SSP database 2025 where the World Bank has no value
+#' @format .csv
+#' @description GDP at PPP in 2021 by GCAM region (billion USD 2010), the target GDP|PPP is calibrated to.
+#' Built from inst/extdata/mappings/common/GDP_PPP_2021_ctry.csv.
+#' @examples
+#' \dontrun{
+#' library(gcamreport)
+#' gcamreport::gdp_ppp_2021_region
+#' }
+"gdp_ppp_2021_region"
+
 #' available_GCAM_versions
 #'
 #' @source local
