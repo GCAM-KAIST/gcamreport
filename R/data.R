@@ -10,6 +10,18 @@
 #' }
 "GCAM_regions_number"
 
+#' trn_truck_annual_travel
+#'
+#' @source local assumption; inst/extdata/mappings/common/trn_truck_annual_travel.csv
+#' @format .csv
+#' @description annual distance per truck (vkt/veh/yr) by GCAM truck size class, used for truck stocks and sales
+#' @examples
+#' \dontrun{
+#' library(gcamreport)
+#' gcamreport::trn_truck_annual_travel
+#' }
+"trn_truck_annual_travel"
+
 #' available_GCAM_versions
 #'
 #' @source local

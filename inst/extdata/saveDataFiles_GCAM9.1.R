@@ -298,7 +298,18 @@ use_data(ucd_size_class_v9.1, overwrite = T)
 ucd_core_v9.1 <- readr::read_csv(file.path(rawDataFolder, "inst/extdata/mappings/GCAM9.1",
                                     "UCD_trn_data_CORE.csv"), comment = "#") %>%
   tidyr::gather(year, value, `2005`:`2100`) %>%
-  dplyr::mutate(year = as.integer(sub("X", "", year)))
+  dplyr::mutate(year = as.integer(sub("X", "", year))) %>%
+  # OTAQ (EMF37) values replace the UCD values with the same keys, as in gcamdata (zenergy_L154)
+  dplyr::rows_upsert(
+    readr::read_csv(file.path(rawDataFolder, "inst/extdata/mappings/GCAM9.1",
+                              "OTAQ_trn_data_EMF37.csv"), comment = "#") %>%
+      tidyr::gather(year, value, `2005`:`2100`) %>%
+      dplyr::mutate(year = as.integer(year)) %>%
+      dplyr::filter(variable != "energy") %>%
+      dplyr::group_by(dplyr::across(-c(year, value))) %>%
+      dplyr::mutate(value = approx_fun(year, value, rule = 2)) %>%
+      dplyr::ungroup(),
+    by = c("UCD_region", "UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel", "variable", "unit", "year"))
 use_data(ucd_core_v9.1, overwrite = T)
 
 region_mapping_ucd_v9.1 <- readr::read_csv(file.path(rawDataFolder, "inst/extdata/mappings/GCAM9.1",

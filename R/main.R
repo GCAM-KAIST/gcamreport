@@ -820,6 +820,9 @@ generate_report <- function(db_path = NULL, db_name = NULL, prj_name, scenarios 
   years_in_prj <<- years_in_prj
   desired_regions.global <<- desired_regions
   desired_variables.global <<- desired_variables
+  # consumption variables the requested prices are weighted by: computed, reported only if requested
+  en_demand_price_map <- get(paste('en_demand_price_map',GCAM_version,sep='_'), envir = asNamespace("gcamreport"))
+  .myGlobals$price_weights.global <- unique(en_demand_price_map$en_consumption_var[en_demand_price_map$en_price_var %in% desired_variables])
   for (i in 1:nrow(.myGlobals$variables.global)) {
     if (.myGlobals$variables.global$required[i]) {
       load_variable(.myGlobals$variables.global[i, ], GCAM_version, GWP_version)
@@ -894,7 +897,7 @@ generate_report <- function(db_path = NULL, db_name = NULL, prj_name, scenarios 
   # remove internal variables from the environment
   rm(list = loaded_internal_variables.global, envir = .GlobalEnv)
   rm(list = c("loaded_internal_variables.global"), envir = .GlobalEnv)
-  rm(list = c("ignore.global", "variables.global", "interactive.global"), envir = .myGlobals)
+  rm(list = c("ignore.global", "variables.global", "interactive.global", "price_weights.global"), envir = .myGlobals)
   gc()
 
   if (launch_ui) {

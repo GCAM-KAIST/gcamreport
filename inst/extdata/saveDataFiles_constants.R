@@ -10,6 +10,11 @@ rawDataFolder <- here::here()
 GDP_PPP_OECD_pc_av <- 55.142 # US dollar 2024
 use_data(GDP_PPP_OECD_pc_av, overwrite = T)
 
+# Annual distance per truck (UCD and OTAQ have none for trucks)
+trn_truck_annual_travel <- read.csv(file.path(rawDataFolder, "inst/extdata/mappings/common", "trn_truck_annual_travel.csv"),
+                                    comment.char = "#", check.names = FALSE)
+use_data(trn_truck_annual_travel, overwrite = T)
+
 # Reference scenario names
 # List all possible default names for the Reference scenario
 scen_ref_patterns <- c('Reference','Baseline','Ref','Base')
