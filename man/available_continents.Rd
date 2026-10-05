@@ -4,15 +4,19 @@
 \alias{available_continents}
 \title{available_continents}
 \usage{
-available_continents(print = TRUE)
+available_continents(print = TRUE, GCAM_version = "v8.2")
 }
 \arguments{
-\item{print}{if TRUE, prints all available continents/regions' groups. TRUE by default.}
+\item{print}{Logical. If TRUE (default), prints the list of available regions' groups. to the console. If FALSE, suppresses the printing and only returns the list.}
+
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-Prints a list of all the available continents/regions' groups for the
-IAMC reporting dataset. It also returns them as a vector.
+A vector of character strings representing the names of all available regions' groups. If `print` is TRUE, the function also prints this list to the console.
 }
 \description{
-available_continents
+Retrieves and optionally prints a list of all available continents/regions' groups for the IAMC reporting dataset.
+}
+\details{
+This function provides a list of regions' groups that are available for use in IAMC reporting. By default, it prints this list, but it can also be used to obtain the list programmatically.
 }

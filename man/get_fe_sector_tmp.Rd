@@ -4,13 +4,16 @@
 \alias{get_fe_sector_tmp}
 \title{get_fe_sector_tmp}
 \usage{
-get_fe_sector_tmp()
+get_fe_sector_tmp(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-fe_sector global variable
+`fe_sector` and `fe_sector_raw` global variables
 }
 \description{
-Get final energy demand by sector
+Retrieve final energy demand by sector.
 }
 \keyword{energy}
 \keyword{internal}

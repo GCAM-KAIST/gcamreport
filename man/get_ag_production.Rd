@@ -4,10 +4,13 @@
 \alias{get_ag_production}
 \title{get_ag_production}
 \usage{
-get_ag_production()
+get_ag_production(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-ag_production_clean global variable
+`ag_production_clean` global variable.
 }
 \description{
 Get agricultural production.

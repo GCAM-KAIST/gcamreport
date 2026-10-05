@@ -4,13 +4,16 @@
 \alias{get_nonbio_tmp}
 \title{get_nonbio_tmp}
 \usage{
-get_nonbio_tmp()
+get_nonbio_tmp(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-nonbio_share global variable
+`nonbio_diff` global variable.
 }
 \description{
-Get no bio CO2 emissions query by sector.
+Retrieves the non-bio CO2 emissions query by sector.
 }
 \keyword{co2}
 \keyword{internal}

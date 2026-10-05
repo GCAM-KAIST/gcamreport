@@ -4,10 +4,13 @@
 \alias{get_regional_emission}
 \title{get_regional_emission}
 \usage{
-get_regional_emission()
+get_regional_emission(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-regional_emission global variable
+`regional_emission` global variable
 }
 \description{
 Compute regional nonCO2 emission: regional production * nonCO2 coef.

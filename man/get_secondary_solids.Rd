@@ -4,13 +4,16 @@
 \alias{get_secondary_solids}
 \title{get_secondary_solids}
 \usage{
-get_secondary_solids()
+get_secondary_solids(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-secondary_solids global variable
+`secondary_solids` global variable
 }
 \description{
-Get secondary solids
+Retrieve secondary solids.
 }
 \keyword{energy}
 \keyword{internal}

@@ -4,13 +4,16 @@
 \alias{get_elec_cf_tmp}
 \title{get_elec_cf_tmp}
 \usage{
-get_elec_cf_tmp()
+get_elec_cf_tmp(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-elec_cf global variable
+`elec_cf` global variable
 }
 \description{
-Calculate future capacity using GCAM
+Computes future capacity estimates using GCAM.
 }
 \keyword{capacity}
 \keyword{internal}

@@ -1,10 +1,17 @@
 # gcamreport
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![docs](https://github.com/bc3LC/gcamreport/actions/workflows/docs.yaml/badge.svg?branch=gcam-v7.0)](https://github.com/bc3LC/gcamreport/actions/workflows/docs.yaml) [![pages-build-deployment](https://github.com/bc3LC/gcamreport/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/bc3LC/gcamreport/actions/workflows/pages/pages-build-deployment) [![test_coverage](https://github.com/bc3LC/gcamreport/actions/workflows/test_coverage.yml/badge.svg?branch=gcam-v7.0)](https://github.com/bc3LC/gcamreport/actions/workflows/test_coverage.yml) [![codecov](https://codecov.io/gh/bc3LC/gcamreport/branch/gcam-v7.0/graph/badge.svg?token=GHV4F7TGFG)](https://codecov.io/gh/bc3LC/gcamreport) [![docker](https://github.com/bc3LC/gcamreport/actions/workflows/docker_impl.yaml/badge.svg?branch=gcam-v7.0)](https://github.com/bc3LC/gcamreport/actions/workflows/docker_impl.yaml) [![build](https://github.com/bc3LC/gcamreport/actions/workflows/build.yaml/badge.svg?branch=gcam-v7.0)](https://github.com/bc3LC/gcamreport/actions/workflows/build.yaml)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10371722.svg)](https://doi.org/10.5281/zenodo.10371722)
-[![paper](https://github.com/bc3LC/gcamreport/actions/workflows/draft-pdf.yml/badge.svg?branch=gcam-v7.0)](https://github.com/bc3LC/gcamreport/blob/gcam-v7.0/paper/paper.pdf)
+[![docs](https://github.com/bc3LC/gcamreport/actions/workflows/docs.yaml/badge.svg)](https://github.com/bc3LC/gcamreport/actions/workflows/docs.yaml)
+[![pages-build-deployment](https://github.com/bc3LC/gcamreport/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/bc3LC/gcamreport/actions/workflows/pages/pages-build-deployment) 
+[![test_coverage](https://github.com/bc3LC/gcamreport/actions/workflows/test_coverage.yml/badge.svg)](https://github.com/bc3LC/gcamreport/actions/workflows/test_coverage.yml)
+[![codecov](https://codecov.io/gh/bc3LC/gcamreport/branch/gcam-v7.0/graph/badge.svg?token=GHV4F7TGFG)](https://codecov.io/gh/bc3LC/gcamreport) 
+[![docker](https://github.com/bc3LC/gcamreport/actions/workflows/docker_impl.yaml/badge.svg)](https://github.com/bc3LC/gcamreport/actions/workflows/docker_impl.yaml)
+[![build](https://github.com/bc3LC/gcamreport/actions/workflows/build.yaml/badge.svg)](https://github.com/bc3LC/gcamreport/actions/workflows/build.yaml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13711003.svg)](https://doi.org/10.5281/zenodo.13711003)
+[![draft-pdf](https://github.com/bc3LC/gcamreport/actions/workflows/draft-pdf.yml/badge.svg)](https://github.com/bc3LC/gcamreport/actions/workflows/draft-pdf.yml)
 [![status](https://joss.theoj.org/papers/816fd8765945cd5f6fe6d8d1fefdde19/status.svg)](https://joss.theoj.org/papers/816fd8765945cd5f6fe6d8d1fefdde19)
+
+<br>
 
 <!-- ------------------------>
 
@@ -16,23 +23,19 @@
 
 <!-- ------------------------>
 
--   [Contents](#contents)
+- [Contents](#contents)
+- [Introduction](#introduction)
+- [Installation Guide](#installation-guide)
+  - [With R](#with-r)
+    - [Light mode installation](#light-mode-installation)
+    - [Full mode installation](#full-mode-installation)
+  - [With Docker](#with-docker)
+- [Getting Started](#getting-started)
+- [How to contribute?](#contribute)
+- [Top common Warnings and Error Messages](#top-common-warnings-and-error-messages)
 
--   [Introduction](#introduction)
 
--   [Installation Guide](#installation-guide)
-
-    -   [With R](#with-r)
-    
-        -   [Light mode installation](#with-R-light-mode-installation)
-        
-        -   [Full mode installation](#with-R-full-mode-installation)
-
-    -   [With Docker](#with-docker)
-
--   [Getting Started](#get-started)
-
--   [Warnings and Error Messages](#bugs)
+<br>
 
 <!-- ------------------------>
 
@@ -46,7 +49,11 @@
 
 [Back to Contents](#contents)
 
-`gcamreport` is a tool that generates a consistent dataset from any scenario run by the Global Change Analysis Model ([GCAM](http://www.globalchange.umd.edu/gcam/)) that meets the reporting requirements of the Integrated Assessment Modeling Consortium ([IAMC](https://www.iamconsortium.org/)). In addition, `gcamreport` includes an interactive user widget that allows users to generate and download plots live, as well as download reduced versions of the formatted dataset in spreadsheet format.
+`gcamreport` is a tool designed to generate consistent datasets from any scenario run by the Global Change Analysis Model ([GCAM](http://www.globalchange.umd.edu/gcam/)), ensuring they meet the reporting standards of the Integrated Assessment Modeling Consortium ([IAMC](https://www.iamconsortium.org/)) defined in the [Common Definitions](https://github.com/IAMconsortium/common-definitions) repository. In addition, `gcamreport` features an interactive user interface that allows users to create and download plots in real time and export reduced, formatted datasets in spreadsheet format. The tool is currently compatible with GCAM-core versions [6.0](https://zenodo.org/records/6619287), [7.0](https://zenodo.org/records/8010145), [7.1](https://zenodo.org/records/11481167), [7.2](https://zenodo.org/records/13946379), [8.2](https://zenodo.org/records/15581174), and the [ScenarioMIP project](https://wcrp-cmip.org/mips/scenariomip/); and GCAM-Europe versions [7.2](https://zenodo.org/records/15655568) and [8.7](https://github.com/bc3LC-GCAMEurope/gcam-core/releases/tag/gcam-europe-v8.7.0).
+Moreover, we support the 2015 and 2021 GCAM base years. Check the [version guide](https://bc3lc.github.io/gcamreport/articles/Version_Guide.html) to see how to run your version! :rocket:
+
+
+<br>
 
 <!-- ------------------------>
 
@@ -64,15 +71,13 @@ There are multiple equivalent ways to install this package:
 
 ### <a name="with-R"></a>With R
 
-There are two ways to install the `gcamreport` package through R. The [light mode installation](#with-R-light-mode-installation) requires only R as it installs the `gcamreport` package directly from the GitHub repository. It is suitable for general use of the package but not compatible with the user interface. The [full mode installation](#with-R-full-mode-installation) requires R, Rstudio and cloning the GitHub repository. It is suitable for general use of the package and allows you to launch the user interface. It is also the best option if you are actively developing or modifying the `gcamreport` package, as it allows you to modify the mappings and functions to create suitable versions for your GCAM model.
+There are two ways to install the `gcamreport` package through R. The [light mode installation](#with-R-light-mode-installation) is the quickest method, as it installs the package directly from GitHub and only requires R. While suitable for general use, it is incompatible with the graphical user interface. The [full mode installation](#with-R-full-mode-installation) requires R, Rstudio and cloning the GitHub repository. This version supports all package functions, including the UI, and is the recommended option for those actively developing or customizing the `gcamreport` package. This last option is essential if you need to modify mappings or core functions to ensure compatibility with specific versions of your GCAM model.
 
 #### <a name="with-R-light-mode-installation"></a>Light mode installation
 
 1.  Requirements
 
     -   R (to download, click [here](https://www.r-project.org/))
-
-
 
 
 
@@ -85,15 +90,6 @@ devtools::install_github('bc3LC/gcamreport')
 
 Now `gcamreport` package is fully loaded. Enjoy! :smile:
 
-**Note**:boom:: If you want to install specific `gcamreport` versions, indicate the tag or branch name when running the installation command. For instance:
-
-``` r
-# to install the taged version "v6.0.1"
-devtools::install_github('bc3LC/gcamreport@v6.0.1')
-
-# to install the branch version "gcam-v6.0"
-devtools::install_github('bc3LC/gcamreport@gcam-v6.0')
-```
 
 <br>
 
@@ -117,20 +113,10 @@ git clone https://github.com/bc3LC/gcamreport.git
 
 ``` r
 install.packages('devtools')
-devtools::load_all()
+devtools::load_all(".", reset = TRUE)
 ```
 
 Now `gcamreport` package is fully loaded. Enjoy! :smile:
-
-**Note**:boom:: If you want to install specific `gcamreport` versions, indicate the tag or branch name when cloning the repository. For instance:
-
-``` bash
-# to clone the taged version "v6.0.1":
-git clone --branch v6.0.1 --single-branch https://github.com/bc3LC/gcamreport.git
-
-# to clone the branch version "gcam-v6.0":
-git clone --branch gcam-v6.0 https://github.com/bc3LC/gcamreport.git
-```
 
 
 <br>
@@ -156,7 +142,7 @@ git clone https://github.com/bc3LC/gcamreport.git
 4.  Inside a terminal (bash or cmd) pull the docker image:
 
 ``` bash
-docker pull claudiarodes/gcamreport_docker:gcam-v7.0-v2
+docker pull claudiarodes/gcamreport_docker:v4
 ```
 
 **Note**:exclamation:: This step requires 13.5GB of free space in your computer.
@@ -164,7 +150,7 @@ docker pull claudiarodes/gcamreport_docker:gcam-v7.0-v2
 5.  Run the Docker container using your full path to the `gcamreport` folder:
 
 ``` bash
-docker run -v /path/to/gcamreport:/app -p 4000:3838 -it claudiarodes/gcamreport_docker:gcam-v7.0-v2
+docker run -v /path/to/gcamreport:/app -p 4000:3838 -it claudiarodes/gcamreport_docker:v4
 ```
 
 This should prompt an R console in your terminal.
@@ -185,18 +171,9 @@ Now `gcamreport` package is fully loaded. Enjoy! :smile:
 
 **Note**:exclamation:: If you followed the [Docker installation](#with-Docker), to open the user interface (UI) once it has been launched, either go to the Docker Desktop and type the last port started, or type <http://localhost:4000> in your browser.
 
-<img src="https://raw.githubusercontent.com/bc3LC/gcamreport/gcam-v7.0/vignettes/readme_fig/shiny_error1.png" title="Click the last started docker port" alt="UI error" width="60%" height="60%"/>
+<img src="https://raw.githubusercontent.com/bc3LC/gcamreport/gcam-core/vignettes/readme_fig/shiny_error1.png" title="Click the last started docker port" alt="UI error" width="60%" height="60%"/>
 
 
-**Note**:boom:: If you want to install previous `gcamreport` versions, indicate the tag or branch name when cloning the repository (step 2). For instance:
-
-``` bash
-# to clone the taged version "v6.0.1":
-git clone --branch v6.0.1 --single-branch https://github.com/bc3LC/gcamreport.git
-
-# to clone the branch version "gcam-v6.0":
-git clone --branch gcam-v6.0 https://github.com/bc3LC/gcamreport.git
-```
 
 <br>
 
@@ -214,12 +191,38 @@ git clone --branch gcam-v6.0 https://github.com/bc3LC/gcamreport.git
 
 The `gcamreport` package consists of a set of functions divided into two different blocks:
 
-- Dataset generation: It creates or loads an existing project and automatically saves the generated dataset that meets the reporting requirements of the [IAMC](https://www.iamconsortium.org/). Main function: `generate_report()`. For more information, see this [tutorial](https://bc3lc.github.io/gcamreport/articles/Dataset_Generation_Tutorial.html) or type `??generate_report` in your R console. If you get any warning or error messages, you might want to look at the [Warnings and Error Messages](#bugs) section.
+- *Dataset generation*: It creates or loads a GCAM project and automatically saves the generated dataset that meets the reporting requirements of the [IAMC](https://www.iamconsortium.org/) ---following the naming conventions, definitions, and units established by the [Common Definitions](https://github.com/IAMconsortium/common-definitions) repository. The main function is `generate_report()`. For more information, see this [tutorial](https://bc3lc.github.io/gcamreport/articles/Dataset_Generation_Tutorial.html) or type `??generate_report` in your R console. If you get any warning or error messages, you might want to look at the [Warnings and Error Messages](#bugs) section.
 
-- Interactive user block: it launches an interactive widget that displays the dataset in tabular form, with the ability to filter, reorder and download live. It also displays plots and allows them to be downloaded, aggregated by variables, regions and scenarios. Main function: `launch_gcamreport_ui()`. For more information see this [tutorial](https://bc3lc.github.io/gcamreport/articles/Interactive_UI_Tutorial.html) or type `??launch_gcamreport_ui` in your R console. If you get any warning or error messages, it might be useful to have a look at the [Warnings and Error Messages](#bugs) section.
+- *Interactive user block*: it launches an interactive widget that displays the dataset in tabular form, with the ability to filter, reorder and download live. It also displays plots and allows them to be downloaded, aggregated by variables, regions and scenarios. The main function is `launch_gcamreport_ui()`. For more information see this [tutorial](https://bc3lc.github.io/gcamreport/articles/Interactive_UI_Tutorial.html) or type `??launch_gcamreport_ui` in your R console. If you get any warning or error messages, it might be useful to have a look at the [Top common Warnings and Error Messages](#bugs) section.
 
 
 The package also includes some default input files (.Rda) that are read by the different functions. These can be changed by the user as detailed in [this tutorial](https://bc3lc.github.io/gcamreport/articles/Modify_Mapping_Template_Tutorial.html).
+
+<br>
+
+
+<!-- ------------------------>
+
+<!-- ------------------------>
+
+## <a name="contribute"></a>How to contribute?
+
+<!-- ------------------------>
+
+<!-- ------------------------>
+
+[Back to Contents](#contents)
+
+You are welcome to contribute to this project! Follow the steps below to facilitate the implementation:
+
+1. Fork this repository.
+2. Commit your modifications.
+3. Open a [Pull Request (PR)](https://github.com/bc3LC/gcamreport/pulls) against the [gcam-core](https://github.com/bc3LC/gcamreport/tree/gcam-core) (main) target branch. Clearly describe the purpose of your modifications and outline the specific changes made. Ensure there are no merge conflicts and that all automated tests pass successfully.
+4. Set [@klau506](https://github.com/klau506) as reviewers (or include this mention in the PR requested text).
+5. Once everything is tested, we will merge the PR for you.
+
+**Note**: in case of integrating a new GCAM version into `gcamreport`, ensure you place a small/dummy project file under `tests/testthat/testInputs/[GCAM_VERSION]/` folder. This allows to test and validate the new compatibility.
+
 
 <br>
 
@@ -227,7 +230,7 @@ The package also includes some default input files (.Rda) that are read by the d
 
 <!-- ------------------------>
 
-## <a name="bugs"></a>Warnings and Error Messages
+## <a name="bugs"></a>Top common Warnings and Error Messages
 
 <!-- ------------------------>
 
@@ -237,13 +240,14 @@ The package also includes some default input files (.Rda) that are read by the d
 
 Some typical and already-known errors that can be easily solved! :bulb:
 
-:computer: Error on "run("path/to/your/data/myData.dat")"
+:computer: Error on "generate_report(prj_name = "path/to/your/data/myData.dat")"
 
 In your R console, you might see this error:
 
       > generate_report("path/to/your/data/myData.dat")
-      [1] "Loading project..."
-      [1] "Loading data, performing checks, and saving output..."
+      Loading project...
+      Loading data, performing checks, and saving output...
+      
       [1] "ag_demand_clean"
       Error in rgcam::getQuery(prj, "demand balances by crop commodity") :
         getQuery: Query demand balances by crop commodity is not in any scenarios in the data set.
@@ -276,6 +280,28 @@ This problem is due to a wrong path specification. Thus, make sure that you spec
 
 <br>
 
+:computer: Error on "generate_report(...)"
+
+In your R console, you might see this error:
+
+      > generate_report(...)
+      Loading project...
+      Loading data, performing checks, and saving output...
+      [1] "ag_demand_clean"
+
+      Error in left_join_strict(., filter_variables(get(paste("ag_demand_map", :
+        Error: Some rows in the left dataset do not have matching keys in the right dataset.
+
+<details>
+
+<summary>**Possible solution**</summary>
+
+This problem is due to a mismatch in the `ag_demand_map` map. Thus, make sure that you specified correctly the `GCAM_verions` parameter in the `generate_report` function. If the error persists, have a look at this [tutorial](https://bc3lc.github.io/gcamreport/articles/Modify_Mapping_Template_Tutorial.html#example-1-step-by-step-to-adapt-current-mappings-to-your-GCAM-version).
+
+</details>
+
+<br>
+
 :computer: Wired message when launching the UI when using the Docker installation.
 
 After using the functions `generate_report()` or `launch_gcamreport_ui()` to launch the UI, you might get this message:
@@ -295,7 +321,7 @@ After using the functions `generate_report()` or `launch_gcamreport_ui()` to lau
 
 This is not an error! You simply need to either go to your Docker Desktop program and click the last started port
 
-<img src="https://raw.githubusercontent.com/bc3LC/gcamreport/gcam-v7.0/vignettes/readme_fig/shiny_error1.png" title="Click the last started docker port" alt="UI error" width="50%" height="50%"/>
+<img src="https://raw.githubusercontent.com/bc3LC/gcamreport/gcam-core/vignettes/readme_fig/shiny_error1.png" title="Click the last started docker port" alt="UI error" width="50%" height="50%"/>
 
 or open this url <http://localhost:4000> in your favourite browser.
 
@@ -307,7 +333,7 @@ or open this url <http://localhost:4000> in your favourite browser.
 
 When oppening your *localhost*, you might see this error:
 
-<img src="https://raw.githubusercontent.com/bc3LC/gcamreport/gcam-v7.0/vignettes/readme_fig/shiny_error2.png" title="UI error" alt="UI error" width="40%" height="40%"/>
+<img src="https://raw.githubusercontent.com/bc3LC/gcamreport/gcam-core/vignettes/readme_fig/shiny_error2.png" title="UI error" alt="UI error" width="40%" height="40%"/>
 
 <details>
 

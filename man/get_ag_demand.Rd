@@ -4,10 +4,13 @@
 \alias{get_ag_demand}
 \title{get_ag_demand}
 \usage{
-get_ag_demand()
+get_ag_demand(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-ag_demand_clean global variable
+`ag_demand_clean` global variable.
 }
 \description{
 Get agricultural demand.

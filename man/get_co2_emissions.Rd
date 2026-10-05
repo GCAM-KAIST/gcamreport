@@ -4,13 +4,16 @@
 \alias{get_co2_emissions}
 \title{get_co2_emissions}
 \usage{
-get_co2_emissions()
+get_co2_emissions(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-co2_emissions_clean global variable
+`co2_emissions_clean` global variable.
 }
 \description{
-Combine CO2 emission queries.
+Combines CO2 emission queries into a single dataset.
 }
 \keyword{co2}
 \keyword{internal}

@@ -4,13 +4,16 @@
 \alias{get_co2_concentration}
 \title{get_co2_concentration}
 \usage{
-get_co2_concentration()
+get_co2_concentration(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-co2_concentration_clean global variable
+`co2_concentration_clean` global variable.
 }
 \description{
-Get World's CO2 concentration query.
+Retrieves the global CO2 concentration query.
 }
 \keyword{co2}
 \keyword{internal}

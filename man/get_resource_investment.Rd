@@ -4,13 +4,16 @@
 \alias{get_resource_investment}
 \title{get_resource_investment}
 \usage{
-get_resource_investment()
+get_resource_investment(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-resource_investment_clean global variable
+`resource_investment_clean` global variable
 }
 \description{
-Calculate investment of resource production
+Calculate investment of resource production.
 }
 \keyword{internal}
 \keyword{investment}

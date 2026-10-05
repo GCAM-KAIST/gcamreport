@@ -4,13 +4,16 @@
 \alias{get_elec_capital}
 \title{get_elec_capital}
 \usage{
-get_elec_capital()
+get_elec_capital(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-elec_capital_clean global variable
+`elec_capital_clean` global variable
 }
 \description{
-Calculate electricity capital
+Calculate capital cost of a newly installed plants.
 }
 \keyword{capital}
 \keyword{internal}

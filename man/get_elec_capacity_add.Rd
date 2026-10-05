@@ -4,13 +4,16 @@
 \alias{get_elec_capacity_add}
 \title{get_elec_capacity_add}
 \usage{
-get_elec_capacity_add()
+get_elec_capacity_add(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-elec_capacity_add_clean global variable
+`elec_capacity_add_clean` global variable
 }
 \description{
-Calculate added total capacity
+Calculate final total added capacity.
 }
 \keyword{capacity}
 \keyword{internal}

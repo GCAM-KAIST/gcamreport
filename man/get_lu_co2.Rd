@@ -4,13 +4,16 @@
 \alias{get_lu_co2}
 \title{get_lu_co2}
 \usage{
-get_lu_co2()
+get_lu_co2(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-LU_carbon_clean global variable
+`LUC_emiss` global variable.
 }
 \description{
-Get land use CO2 emissions.
+Retrieves land use CO2 emissions data.
 }
 \keyword{co2}
 \keyword{internal}

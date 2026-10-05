@@ -11,69 +11,77 @@ generate_report(
   scenarios = NULL,
   final_year = 2100,
   desired_variables = "All",
+  inverse_desired_variables = FALSE,
+  ignore = NULL,
   desired_regions = "All",
   desired_continents = "All",
   save_output = TRUE,
   output_file = NULL,
   launch_ui = TRUE,
-  queries_general_file = gcamreport::queries_general,
-  queries_nonCO2_file = gcamreport::queries_nonCO2
+  interactive = F,
+  GCAM_version = "v8.2",
+  GWP_version = "AR5",
+  queries_general_file = NULL,
+  queries_nonCO2_file = NULL,
+  all_tier1 = F
 )
 }
 \arguments{
-\item{db_path}{full path of the GCAM database.}
+\item{db_path}{Full path to the GCAM database. Required if creating a new project.}
 
-\item{db_name}{name of the GCAM database.}
+\item{db_name}{Name of the GCAM database. Required if creating a new project.}
 
-\item{prj_name}{name of the rgcam project. This can be an existing project name, in which case the project will be loaded, or a new project name,
-in which case a new project will be created.. Possible extensions: .dat and .proj.}
+\item{prj_name}{Name of the GCAM project. Can be an existing project name (loads the project) or a new project name (creates a new project). Accepts extensions: .dat and .proj.}
 
-\item{scenarios}{name of the scenarios to be considered. By default, all the scenarios in the project or the database are considered.}
+\item{scenarios}{Names of the scenarios to consider. Defaults to all scenarios in the project or database.}
 
-\item{final_year}{final year of the data. By default = 2100. ATENTION: final_year must be at least 2025.}
+\item{final_year}{Final year of the data. Defaults to 2100. Note: `final_year` must be at least 2025 and must align with available 5-year intervals, such as 2025, 2030, 2035, 2040, etc.}
 
-\item{desired_variables}{desired variables to have in the report. Considered 'All' by default.
-Otherwise, specify a vector with all the desired options. To know all possible options, run `available_variables()`.
-In case the project dataset needs to be created, it will be created containing only the specified variables.
-ATTENTION: global variables such as "Emissions" will be computed considering only the selected variables. As an example,
-if you select "Emissions" and "Emissions|CO2", "Emissions" will only account for "Emissions|CO2", and will not
-consider other variables, such as "Emissions|CH4" or "Emissions|NH3"}
+\item{desired_variables}{Variables to include in the report. Defaults to 'All'. Specify a vector for specific variables. To view available options, run `available_variables()`.
+Note1: You can use the `*` notation as detailed in [this](https://bc3lc.github.io/gcamreport/articles/Dataset_Generation_Tutorial.html#example-5-specify-the-variables) tutorial to select multiple variables from the same family.
+Note2: Global variables like "Emissions" will only account for selected variables. E.g., if you select "Emissions" and "Emissions|CO2", "Emissions" will only account for "Emissions|CO2", and will not account for other variables such as "Emissions|CH4" or "Emissions|NH3".}
 
-\item{desired_regions}{desired regions to consider. By default, 'All'. Otherwise, specify a vector with all the considered regions.
-To know all possible regions, run `available_regions()`. ATTENTION: the considered regions will make up "World".
-In case the project dataset needs to be created, it will be produced with only the specified regions.}
+\item{inverse_desired_variables}{If `TRUE` (not default), consider all but the detailed variables in the `desired_variables` parameter.}
 
-\item{desired_continents}{desired continents/regions' groups to consider. By default, 'All'. Otherwise, specify a vector with all
-the considered continents/regions' groups. To know all possibilities, run `available_continents()`. ATTENTION: the considered
-continents/regions' groups will make up "World". In case the project dataset needs to be created, it will be produced with only the
-specified continents/regions' groups.}
+\item{ignore}{Policy names introduced by the user to ignore during gcamreport processing of physical quantities, since otherwise they will be flagged as names missing from mapping files and cause an error. Note: Currently having one of the specified name patterns in any column of the query results, such as sector, subsector, input, etc. will cause the error to be disregarded. Same behavior than adding the policy names to the corresponding mappings indicating `NoReported`.}
 
-\item{save_output}{if TRUE, save reporting data in CSV and XLSX formats. If FALSE, do not save data. If 'save_output = CSV' or
-'save_output = XLSX', the data will be only saved in the specified format.}
+\item{desired_regions}{Regions to include in the report. Defaults to 'All'. Specify a vector for specific regions. To view available options, run `available_regions()`. Note: The dataset will include only the specified regions, which will make up "World".}
 
-\item{output_file}{file path and name of the saved data. Not used if data not saved. By default, saved in the same directory of the
-database or the project file, and using a default name containing the project name with 'standardized' tag.
-In case of specifying the `output_file`, introduce a whole path (e.g. /path/to/output/fileName) without extension tag, it will be automatically added.}
+\item{desired_continents}{Continent/region groups to include in the report. Defaults to 'All'. Specify a vector for specific groups. To view available options, run `available_continents()`. Note: The dataset will include only the specified groups, which will make up "World".}
 
-\item{launch_ui}{if TRUE, launch User Interface, Do not launch it otherwise.}
+\item{save_output}{If `TRUE` (default), saves reporting data in CSV and XLSX formats. If `FALSE`, data is not saved. If 'CSV' or 'XLSX', data will be saved only in the specified format.}
 
-\item{queries_general_file}{full path to a general xml query file (including file name and extension). By default it points to the
-gcamreport general query file, compatible with the latest GCAM version and able to report all standardized variables.}
+\item{output_file}{File path and name for saving the data. If not specified, defaults to the directory of the database or project file with a default name containing 'standardized'. Provide a full path without an extension, which will be automatically added.}
 
-\item{queries_nonCO2_file}{full path to an xml query file (including file name and extension) designed to load long nonCO2 queries:
-"nonCO2 emissions by sector (excluding resource production)" and "nonCO2 emissions by region". By default it points to the
-gcamreport nonCO2 query file, compatible with the latest GCAM version and necessary to report some of the standardized variables.}
+\item{launch_ui}{If `TRUE` (default), launches the User Interface. If `FALSE`, does not launch the UI.}
+
+\item{interactive}{If `TRUE` (not default), asks the user what to do when Warnings appear. Otherwise, the Warnings are displayed at the end of the script.}
+
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
+
+\item{GWP_version}{Global Warming Potential (GWP) version: 'AR5' (default), 'AR6', or 'AR4'.}
+
+\item{queries_general_file}{Optional. Full path to a general XML query file (including file name and extension). Defaults to a general query file compatible with the specified `GCAM_version` that reports all standardized variables.}
+
+\item{queries_nonCO2_file}{Optional. Full path to an XML query file (including file name and extension) for non-CO2 queries, such as "nonCO2 emissions by subsector (excluding resource production)" and "nonCO2 emissions by region". Defaults to a non-CO2 query file compatible with the specified `GCAM_version`.}
+
+\item{all_tier1}{If `TRUE` (not default), introduce all Tier 1 Variables (as 0) in the standardized report.}
 }
 \value{
-RData, CSV, and XLSX saved datafiles with the desired standardized variables, launches user interface, and save the rgcam
-project file (if created).
+Saves RData, CSV, and XLSX files with standardized variables, launches the user interface, and saves the GCAM project file if created.
 }
 \description{
-Main function. Creates/loads a GCAM project, standardizes the data and saves it
-in several forms (RData, CSV, and XLSX), runs vetting verifications, and launches
-the User Interface. You can specify the regions and/or variables to be reported and point
-either the `db_path`, the `db_name`, the `prj_name`, and `scenarios` to create a new project
-and produce the standardized report; or the `prj_name` and `scenarios` to produce the report
-of an existing project.
+Main function for generating a GCAM project report. This function handles:
+- Creating or loading a GCAM project.
+- Standardizing the data and saving it in RData, CSV, and XLSX formats.
+- Running vetting verifications.
+- Launching the User Interface (UI).
+}
+\details{
+You can specify the regions and/or variables to be reported and provide:
+- Either `db_path`, `db_name`, `prj_name`, and `scenarios` to create a new project
+  and generate the report.
+- Or `prj_name` and `scenarios` to produce a report from an existing project.
+
 The resulting RData output can be used to manually call `launch_gcamreport_ui`.
 }

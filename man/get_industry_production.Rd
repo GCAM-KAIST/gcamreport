@@ -4,13 +4,16 @@
 \alias{get_industry_production}
 \title{get_industry_production}
 \usage{
-get_industry_production()
+get_industry_production(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-industry_production_clean global variable
+`industry_production_clean` global variable
 }
 \description{
-Get industry production.
+Retrieve industry production.
 }
 \keyword{energy}
 \keyword{internal}

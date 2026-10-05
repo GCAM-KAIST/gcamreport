@@ -4,13 +4,16 @@
 \alias{get_temperature}
 \title{get_temperature}
 \usage{
-get_temperature()
+get_temperature(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-global_temp_clean global variable
+`global_temp_clean` global variable.
 }
 \description{
-Get World's mean temperature query.
+Retrieves the global mean temperature query.
 }
 \keyword{internal}
 \keyword{temperature}

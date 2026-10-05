@@ -4,18 +4,17 @@
 \alias{filter_variables}
 \title{filter_variables}
 \usage{
-filter_variables(data, variable)
+filter_variables(data, variable = NULL, extra = NULL)
 }
 \arguments{
-\item{data}{dataframe to be filtered}
+\item{data}{Dataframe to filter.}
 
-\item{variable}{variable that requires this data}
+\item{variable}{Variable to use for filtering.}
 }
 \value{
-filtered dataframe
+Filtered dataframe.
 }
 \description{
-Filter the desired regions of a GCAM project
+Filters a dataframe based on specified variables.
 }
 \keyword{internal}
-\keyword{utils}

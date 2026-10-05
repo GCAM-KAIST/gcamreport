@@ -4,13 +4,16 @@
 \alias{get_co2_price}
 \title{get_co2_price}
 \usage{
-get_co2_price()
+get_co2_price(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-co2_price_clean global variable
+`co2_price_clean` global variable
 }
 \description{
-Get co2 price.
+Retrieve co2 price.
 }
 \keyword{co2}
 \keyword{internal}

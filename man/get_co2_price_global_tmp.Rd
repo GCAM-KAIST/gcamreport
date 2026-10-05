@@ -4,13 +4,16 @@
 \alias{get_co2_price_global_tmp}
 \title{get_co2_price_global_tmp}
 \usage{
-get_co2_price_global_tmp()
+get_co2_price_global_tmp(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-co2_price_global & regions global variable
+`co2_price_global` global variable
 }
 \description{
-Get global co2 price.
+Retrieve global co2 price.
 }
 \keyword{co2}
 \keyword{internal}
