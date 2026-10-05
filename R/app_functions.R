@@ -5,14 +5,13 @@
 
 #' compute_height
 #'
-#' Return perfect heigh of rendered plots with ungrouped regions
+#' Return perfect height of rendered plots with ungrouped regions
 #' @param reg_all regions' vector
 #' @keywords internal
-#' @importFrom dplyr if_else
 #' @export
 compute_height <- function(reg_all) {
   reg_clean <- setdiff(reg_all, c("MAF", "LAM", "OECD90", "REF", "ASIA"))
-  h <- if_else(length(reg_clean) < 3, 325, 160 * ceiling(sqrt(length(reg_clean))))
+  h <- dplyr::if_else(length(reg_clean) < 3, 325, 160 * ceiling(sqrt(length(reg_clean))))
 
   return(h)
 }
@@ -80,7 +79,6 @@ change_style <- function(tree, type, tmp_vars = NULL) {
 #' @param grouped if TRUE, aim to display grouped plot; ungrouped plot otherwise
 #' @keywords internal
 #' @importFrom magrittr %>%
-#' @importFrom stringr str_extract
 #' @export
 check_user_choices_plot <- function(vars, scen, years, reg, grouped) {
   # errors' vector
@@ -88,30 +86,30 @@ check_user_choices_plot <- function(vars, scen, years, reg, grouped) {
 
   # study the category of the selected variables
   if (length(vars) > 0) {
-    check_vars <- sub("\\|.*", "", str_extract(vars, "(.*?)(\\||$)"))
+    check_vars <- sub("\\|.*", "", stringr::str_extract(vars, "(.*?)(\\||$)"))
   } else {
     check_vars <- NULL
   }
 
   # check that at least one scenario has been choosen
   if (length(unique(scen)) < 1) {
-    error_message <- c(error_message, "ERROR: Select at least one scenario please.")
+    error_message <- c(error_message, "ERROR: select at least one scenario please.")
   }
   # check that at least one year has been choosen
   if (length(unique(years)) < 1) {
-    error_message <- c(error_message, "ERROR: Select at least one year please.")
+    error_message <- c(error_message, "ERROR: select at least one year please.")
   }
   # check that at least one region has been choosen
   if (length(unique(reg)) < 1) {
-    error_message <- c(error_message, "ERROR: Select at least one region please.")
+    error_message <- c(error_message, "ERROR: select at least one region please.")
   }
   # check that at least one variable has been choosen
   if (length(unique(check_vars)) < 1) {
-    error_message <- c(error_message, "ERROR: Select at least one variable please.")
+    error_message <- c(error_message, "ERROR: select at least one variable please.")
   }
   # in case of grouped-variables' plot, check that at only variables from the same category have been choosen
   if (grouped & length(unique(check_vars)) > 1) {
-    error_message <- c(error_message, "ERROR: Select only variables from the same category please.")
+    error_message <- c(error_message, "ERROR: select only variables from the same category please.")
   }
 
   return(error_message)
@@ -127,20 +125,19 @@ check_user_choices_plot <- function(vars, scen, years, reg, grouped) {
 #' @param sidebarItemExpanded input sidebar expanded item
 #' @keywords internal
 #' @importFrom magrittr %>%
-#' @importFrom shinyTree get_selected
 #' @export
 update_user_choices_plot <- function(selected_scen, selected_years,
                                      tree_regions, tree_variables, sidebarItemExpanded) {
 
   # get selected regions and variables from input
-  sel_reg_ini <- get_selected(tree_regions, format = "slices")
-  sel_vars_ini <- get_selected(tree_variables, format = "slices")
+  sel_reg_ini <- shinyTree::get_selected(tree_regions, format = "slices")
+  sel_vars_ini <- shinyTree::get_selected(tree_variables, format = "slices")
 
   basic_reg <- 0
   basic_vars <- 0
   # if it's the first time loading regions and there is a sidebarItem expanded different than regions, choose all possible regions
   if (firstReg && ((!is.null(sidebarItemExpanded) && sidebarItemExpanded != "Regions") || is.null(sidebarItemExpanded))) {
-    sel_reg_ini <- gcamreport::reg_cont$region
+    sel_reg_ini <- get(paste('reg_cont',GCAM_version,sep='_'), envir = asNamespace("gcamreport"))[['region']]
     basic_reg <- 1
   }
 
@@ -205,7 +202,8 @@ update_user_choices_plot <- function(selected_scen, selected_years,
 #' @importFrom magrittr %>%
 #' @export
 reset_first_load <- function() {
-  tree_reg <<- do_mount_tree(gcamreport::reg_cont, names(gcamreport::reg_cont), selec = TRUE)
+  reg_cont <- get(paste('reg_cont',GCAM_version,sep='_'), envir = asNamespace("gcamreport"))
+  tree_reg <<- do_mount_tree(reg_cont, names(reg_cont), selec = TRUE)
   cols.global <<- unique(sdata[, grepl("col", names(sdata))])
   tree_vars <<- do_mount_tree(cols.global, names(cols.global), selec = TRUE)
   firstLoad <<- TRUE
@@ -229,8 +227,6 @@ reset_first_load <- function() {
 #' @param sel_reg selected regions in tree
 #' @keywords internal
 #' @importFrom magrittr %>%
-#' @importFrom dplyr filter select
-#' @importFrom tibble as_tibble
 #' @return subseted dataset
 #' @export
 do_data_sample <- function(sdata, sel_scen, sel_years, sel_cols, sel_vars, sel_reg,
@@ -257,11 +253,11 @@ do_data_sample <- function(sdata, sel_scen, sel_years, sel_cols, sel_vars, sel_r
 
   # subset the data
   data_sample <- sdata %>%
-    filter(Scenario %in% sel_scen) %>%
-    filter(Variable %in% vars) %>%
-    filter(Region %in% reg) %>%
-    select(c(sel_cols, sel_years)) %>%
-    as_tibble()
+    dplyr::filter(Scenario %in% sel_scen) %>%
+    dplyr::filter(Variable %in% vars) %>%
+    dplyr::filter(Region %in% reg) %>%
+    dplyr::select(c(sel_cols, sel_years)) %>%
+    tibble::as_tibble()
 
   return(data_sample)
 }
@@ -279,6 +275,12 @@ do_data_sample <- function(sdata, sel_scen, sel_years, sel_cols, sel_vars, sel_r
 #' @return nested list
 #' @export
 do_mount_tree <- function(df, column_names, current_column = 1, selec = TRUE, iid = NULL) {
+
+  if (current_column > length(column_names)) {
+    # base case: if there are no more rows, return an empty list
+    return("")
+  }
+
   # filter the data frame to include only rows with the current level
   filtered_df <- df[!is.na(df[[column_names[current_column]]]), ]
 
@@ -330,7 +332,6 @@ do_mount_tree <- function(df, column_names, current_column = 1, selec = TRUE, ii
 #' if it refers to regional  aggregation
 #' @keywords internal
 #' @importFrom magrittr %>%
-#' @importFrom rrapply rrapply
 #' @return dataframe
 #' @export
 do_unmount_tree <- function(base_tree, type) {
@@ -338,7 +339,7 @@ do_unmount_tree <- function(base_tree, type) {
 
   if (length(base_tree) > 0) {
     # transform dataset to list of items with delimiter |
-    ll <- rrapply(
+    ll <- rrapply::rrapply(
       base_tree,
       classes = "numeric",
       how = "flatten",

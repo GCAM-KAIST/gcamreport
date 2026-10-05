@@ -4,13 +4,16 @@
 \alias{get_gdp_ppp}
 \title{get_gdp_ppp}
 \usage{
-get_gdp_ppp()
+get_gdp_ppp(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-GDP_PPP_clean global variable
+`GDP_PPP_clean`, `GDP_PPP_pc_growth_clean`, and `GDP_PPP_pc_oecd_share_clean` global variables.
 }
 \description{
-Get GDP (PPP) query, compute regional GDP, and change units to [10USD].
+Retrieves GDP (PPP) data, computes regional GDP and annual GDPpc growth rate, and converts units to 10 USD.
 }
-\keyword{GDP}
+\keyword{econ}
 \keyword{internal}

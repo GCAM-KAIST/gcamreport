@@ -4,13 +4,16 @@
 \alias{get_forcing}
 \title{get_forcing}
 \usage{
-get_forcing()
+get_forcing(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-forcing_clean global variable
+`forcing_clean` global variable.
 }
 \description{
-Get World's forcing query.
+Retrieves the global forcing query.
 }
 \keyword{forcing}
 \keyword{internal}

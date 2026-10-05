@@ -4,14 +4,16 @@
 \alias{update_template}
 \title{update_template}
 \usage{
-update_template()
+update_template(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-Updated template as .rda and as csv in the inst/extdata folder
+Updated template saved as both .rda and .csv files in the `inst/extdata` folder.
 }
 \description{
-Update the template file. This function checks for new reported variables,
-as well as cleans no-reported variables
+Update the template file by incorporating new reported variables and removing unreported ones.
 }
 \keyword{internal}
 \keyword{template}

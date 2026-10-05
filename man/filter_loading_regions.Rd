@@ -4,22 +4,26 @@
 \alias{filter_loading_regions}
 \title{filter_loading_regions}
 \usage{
-filter_loading_regions(data, desired_regions = "All", variable)
+filter_loading_regions(
+  data,
+  desired_regions = "All",
+  variable,
+  GCAM_version = "v8.2"
+)
 }
 \arguments{
-\item{data}{dataframe to be filtered}
+\item{data}{Dataframe to filter.}
 
-\item{desired_regions}{desired regions to consider. By default, 'All'. Otherwise, specify a vector with all the considered regions.
-To know all possible regions, run `available_regions()`. ATTENTION: the considered regions will make up "World".
-In case the project dataset needs to be created, it will be produced with only the specified regions.}
+\item{desired_regions}{Vector of regions to include. Defaults to 'All'. To view available regions, run `available_regions()`. The dataset will only include the specified regions.}
 
-\item{variable}{dataset variable information}
+\item{variable}{Variable information for the dataset.}
+
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-filtered dataframe
+Filtered dataframe.
 }
 \description{
-Filter the desired regions of a GCAM project
+Filters a GCAM project dataframe by the desired regions.
 }
 \keyword{internal}
-\keyword{utils}

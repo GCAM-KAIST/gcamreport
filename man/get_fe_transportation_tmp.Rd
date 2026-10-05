@@ -4,13 +4,16 @@
 \alias{get_fe_transportation_tmp}
 \title{get_fe_transportation_tmp}
 \usage{
-get_fe_transportation_tmp()
+get_fe_transportation_tmp(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-fe_transportation global variable
+`fe_transportation` and `fe_transportation_raw` global variables
 }
 \description{
-Get mode-specific transport final energy to break out rail, ship, and domestic air.
+Retrieve mode-specific transport final energy, including rail, ship, and domestic air.
 }
 \keyword{energy}
 \keyword{internal}

@@ -4,13 +4,16 @@
 \alias{get_gov_revenue}
 \title{get_gov_revenue}
 \usage{
-get_gov_revenue()
+get_gov_revenue(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-gov_revenue_all global variable
+`gov_revenue_clean` global variable
 }
 \description{
-Get overall carbon revenue.
+Retreive overall carbon revenue.
 }
 \keyword{internal}
 \keyword{revenue}

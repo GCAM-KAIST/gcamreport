@@ -4,13 +4,16 @@
 \alias{get_price_var_tmp}
 \title{get_price_var_tmp}
 \usage{
-get_price_var_tmp()
+get_price_var_tmp(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-price_var global variable
+`price_var` global variable
 }
 \description{
-Get price variables to compute carbon price.
+Retrieve price variables to compute carbon price.
 }
 \keyword{internal}
 \keyword{process}

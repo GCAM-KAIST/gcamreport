@@ -4,13 +4,16 @@
 \alias{get_elec_investment}
 \title{get_elec_investment}
 \usage{
-get_elec_investment()
+get_elec_investment(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-elec_investment_clean global variable
+`elec_investment_clean` global variable
 }
 \description{
-Calculate electricity investment = annual capacity additions * capital costs
+Calculate electricity investment = annual capacity additions * capital costs.
 }
 \keyword{capital}
 \keyword{internal}

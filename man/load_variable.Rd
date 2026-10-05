@@ -4,15 +4,22 @@
 \alias{load_variable}
 \title{load_variable}
 \usage{
-load_variable(var)
+load_variable(var, GCAM_version = "v8.2", GWP_version = "AR5")
 }
 \arguments{
-\item{var}{variable to be loaded.}
+\item{var}{The name of the variable to be loaded. This should be specified as a character string.}
+
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
+
+\item{GWP_version}{Global Warming Potential (GWP) version: 'AR5' (default), 'AR6', or 'AR4'.}
 }
 \value{
-load variable.
+Loads the specified variable and its dependencies into the environment. This function does not return a value but ensures that the variable and its dependencies are available for further processing.
 }
 \description{
-Recursive function to load the desired variable and its dependent variables
+Recursively loads the specified variable and its dependent variables.
+}
+\details{
+This internal function is used to load a given variable from the GCAM project along with any dependent variables that are required for its proper context and calculations.
 }
 \keyword{internal}

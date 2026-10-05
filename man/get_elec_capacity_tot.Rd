@@ -4,13 +4,16 @@
 \alias{get_elec_capacity_tot}
 \title{get_elec_capacity_tot}
 \usage{
-get_elec_capacity_tot()
+get_elec_capacity_tot(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-elec_capacity_tot_clean global variable
+`elec_capacity_tot_clean` global variable
 }
 \description{
-Calculate electricity total capacity
+Calculate total electricity capacity.
 }
 \keyword{capacity}
 \keyword{internal}

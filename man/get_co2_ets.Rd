@@ -4,10 +4,13 @@
 \alias{get_co2_ets}
 \title{get_co2_ets}
 \usage{
-get_co2_ets()
+get_co2_ets(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-co2_ets_by reg and co2_ets_bysec global variables
+`co2_ets_byreg` and `co2_ets_bysec` global variables
 }
 \description{
 Get World's CO2 ETS emissions query.

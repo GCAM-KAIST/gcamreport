@@ -4,10 +4,13 @@
 \alias{get_co2_sequestration}
 \title{get_co2_sequestration}
 \usage{
-get_co2_sequestration()
+get_co2_sequestration(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-co2_sequestration_clean global variable
+`co2_sequestration_clean` and `co2_removal_raw` global variables.
 }
 \description{
 Get carbon sequestration.

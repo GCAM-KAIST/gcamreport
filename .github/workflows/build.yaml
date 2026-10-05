@@ -3,46 +3,79 @@ name: build
 on:
   push:
     branches:
-      - gcam-v7.0
-      - dev
+      - gcam-core
+      - gcam-iamcompact
+      - dev_commdef
+  pull_request:
+    branches: [ '**' ]
 
 jobs:
   R-CMD:
-    runs-on: ${{ matrix.config.os }}
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - { os: ubuntu-latest, r: 'devel', cran: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    name: ubuntu-latest (4.1)
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      GITHUB_PAT: ${{ secrets.GH_GCAMREPORT_TOKEN}}
+      GITHUB_PAT: ${{ secrets.GH_GCAMREPORT_TOKEN }}
+      RENV_CONFIG_REPOS_OVERRIDE: https://packagemanager.posit.co/cran/__linux__/jammy/latest
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: r-lib/actions/setup-r@v2-branch
-        with:
-          r-version: '3.6'
-      - uses: r-lib/actions/setup-pandoc@v2-branch
-      - uses: r-lib/actions/setup-tinytex@v2-branch
+      - uses: actions/checkout@v3
 
-      - name: Install libraries
-        if: startsWith(matrix.config.os, 'ubuntu')
+      # 1. Strip out unused runner software to free up system resources
+      - name: Free disk and memory
         run: |
-          sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
+          docker system prune -af || true
+        shell: bash
+
+      # 2. Add 8GB of swap space to prevent hard Out-Of-Memory (OOM) kills
+      - name: Increase swap
+        run: |
+          sudo swapoff -a
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          free -h
+        shell: bash
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.1'
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install system dependencies
+        run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libudunits2-dev libgdal-dev libgeos-dev libproj-dev libmagick++-dev libavfilter-dev libharfbuzz-dev libfribidi-dev
+          sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes","rcmdcheck"), repos = "https://cloud.r-project.org")
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_github("JGCRI/rpackageutils")
+          install.packages("pak")
+          # Install everything needed for the package and its tests
+          pak::local_install_dev_deps()
+          # Install specific extra tools and GitHub packages
+          pak::pkg_install(c("devtools", "rcmdcheck", "JGCRI/rpackageutils", "shinyTree/shinyTree"))
         shell: Rscript {0}
 
-      - name: Check
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes", "--no-build-vignettes"), build_args = c("--no-manual", "--ignore-vignettes", "--no-build-vignettes"), error_on = "error")
-        shell: Rscript {0}
+      # 3. Run tests per-file so memory clears, with live stdout monitoring
+      - name: Run tests and monitor memory
+        run: |
+          # Start background monitor (prints to the live log every 15 seconds)
+          (while true; do echo "[MEM] $(date +%H:%M:%S) $(free -m | awk 'NR==2{print $3"/"$2" MB used"}')"; sleep 15; done) &
+          MON=$!
+
+          # Loop through each test file in a fresh R process
+          for f in tests/testthat/test*.R; do
+            echo "=== $f ==="
+            Rscript -e "devtools::load_all('.'); testthat::test_file('$f', stop_on_failure = TRUE)" || echo "FAILED: $f"
+            free -m | awk 'NR==2{print "[MEM after] "$3"/"$2" MB"}'
+          done
+
+          # Clean up monitor when done
+          kill $MON
+        shell: bash

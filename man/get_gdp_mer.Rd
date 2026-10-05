@@ -4,13 +4,16 @@
 \alias{get_gdp_mer}
 \title{get_gdp_mer}
 \usage{
-get_gdp_mer()
+get_gdp_mer(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-GDP_MER_clean global variable
+`GDP_MER_clean` global variable.
 }
 \description{
-Get GDP (MER) query and change units to [10USD].
+Retrieves GDP (MER) data and converts units to 10 USD.
 }
-\keyword{GDP}
+\keyword{econ}
 \keyword{internal}

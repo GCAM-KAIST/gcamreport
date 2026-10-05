@@ -4,13 +4,16 @@
 \alias{get_nonco2_emissions}
 \title{get_nonco2_emissions}
 \usage{
-get_nonco2_emissions()
+get_nonco2_emissions(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-nonco2_clean global variable
+`nonco2_clean` global variable.
 }
 \description{
-Get non CO2 emissions query.
+Retrieves non-CO2 emissions data.
 }
 \keyword{internal}
 \keyword{nonco2}

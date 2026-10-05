@@ -4,13 +4,16 @@
 \alias{get_elec_gen_tech}
 \title{get_elec_gen_tech}
 \usage{
-get_elec_gen_tech()
+get_elec_gen_tech(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-elec_gen_tech_clean global variable
+`secondary_energy_clean` and `secondary_energy_raw` global variables
 }
 \description{
-Get electricity generation
+Retrieve electricity generation.
 }
 \keyword{electricity}
 \keyword{internal}

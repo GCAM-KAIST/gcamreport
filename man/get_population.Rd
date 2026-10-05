@@ -4,13 +4,16 @@
 \alias{get_population}
 \title{get_population}
 \usage{
-get_population()
+get_population(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-population_clean global variable
+`population_clean` global variable.
 }
 \description{
-Get population query and change units to [million].
+Retrieves the population query and converts units to millions.
 }
 \keyword{internal}
 \keyword{population}

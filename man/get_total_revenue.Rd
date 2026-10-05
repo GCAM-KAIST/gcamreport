@@ -4,10 +4,13 @@
 \alias{get_total_revenue}
 \title{get_total_revenue}
 \usage{
-get_total_revenue()
+get_total_revenue(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-total_revenue global variable
+`total_revenue` global variable
 }
 \description{
 Compute total revenue: total production * global price.

@@ -4,13 +4,18 @@
 \alias{do_bind_results}
 \title{do_bind_results}
 \usage{
-do_bind_results()
+do_bind_results(GCAM_version = "v8.2", all_tier1 = F)
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
+
+\item{all_tier1}{If `TRUE` (not default), introduce all Tier 1 Variables (as 0) in the standardized report.}
 }
 \value{
-Save results in an output file.
+Saved results in an output file.
 }
 \description{
-Bind and save results
+Binds results and saves them to an output file.#'
 }
 \keyword{internal}
 \keyword{process}

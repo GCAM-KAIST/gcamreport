@@ -4,13 +4,16 @@
 \alias{get_co2_price_fragmented_tmp}
 \title{get_co2_price_fragmented_tmp}
 \usage{
-get_co2_price_fragmented_tmp()
+get_co2_price_fragmented_tmp(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-co2_price_fragmented global variable
+`co2_price_fragmented` global variable
 }
 \description{
-Get fragmented co2 price.
+Retrieve CO2 fragmented price.
 }
 \keyword{co2}
 \keyword{internal}

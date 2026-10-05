@@ -4,17 +4,19 @@
 \alias{conv_EJ_GW}
 \title{conv_EJ_GW}
 \usage{
-conv_EJ_GW(data, cf, EJ)
+conv_EJ_GW(data, cf, EJ, GCAM_version = "v8.2")
 }
 \arguments{
-\item{data}{dataset}
+\item{data}{Dataset containing energy data.}
 
-\item{cf}{conversion factor}
+\item{cf}{Conversion factor for EJ to GW.}
 
-\item{EJ}{EJ amount}
+\item{EJ}{Amount of energy in EJ.}
+
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \description{
-Covert EJ to GW
+Converts energy from EJ to GW.
 }
 \keyword{conversion}
 \keyword{internal}

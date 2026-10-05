@@ -1,17 +1,20 @@
-FROM rocker/r-base:4.1.0
+# Start with the base image
+FROM rocker/r-ver:4.3.0
 
 ENV R_LIBS_USER="/usr/local/lib/R/site-library"
 RUN chmod a+w /usr/local/lib/R/site-library
 
 # Install required system libraries
-RUN apt-get update \
-  && apt-get install -y \
+RUN apt-get update -qq \
+    && apt-get install -y --no-install-recommends --fix-missing \
     libcurl4-openssl-dev \
     libssl-dev \
     libxml2-dev \
     libharfbuzz-dev \
     libfribidi-dev \
-    git
+    git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # install pkgs
 RUN apt-get update
@@ -46,7 +49,7 @@ RUN R -e "remotes::install_github('JGCRI/rpackageutils')"
 
 # clone repo
 RUN apt-get install -y git
-RUN git clone -b gcam-v7.0 https://github.com/bc3LC/gcamreport.git /root/gcamreport
+RUN git clone -b gcam-core https://github.com/bc3LC/gcamreport.git /root/gcamreport
 
 # shiny dependencies
 RUN apt-get --allow-releaseinfo-change update
@@ -62,6 +65,7 @@ RUN apt-get install -y \
 
 RUN ln -sf /usr/bin/chromium-bsu /usr/bin/x-www-browser && \
     ln -sf /usr/bin/chromium-bsu /usr/bin/gnome-www-browser
+RUN mkdir -p /usr/lib/R/etc
 RUN echo "local(options(shiny.port = 3838, shiny.host = '0.0.0.0'))" > /usr/lib/R/etc/Rprofile.site
 
 # working directory
@@ -74,7 +78,7 @@ RUN addgroup --system app \
 # Update the package list to install Java JRE
 RUN echo 'export PATH=$PATH:/usr/java/jre1.6.0_24/bin/' >> /root/.bashrc
 RUN apt-get update && \
-    apt-get install libasound2-data=1.2.11-1 && \
+    apt-get install -y libasound2-data && \
     apt-get install -y openjdk-8-jre && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

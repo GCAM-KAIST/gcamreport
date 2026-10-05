@@ -4,13 +4,16 @@
 \alias{get_primary_energy}
 \title{get_primary_energy}
 \usage{
-get_primary_energy()
+get_primary_energy(GCAM_version = "v8.2")
+}
+\arguments{
+\item{GCAM_version}{Name of the GCAM compatible version. Run `available_GCAM_versions()` to see the list of supported options.}
 }
 \value{
-primary_energy_clean global variable
+`primary_energy_clean` global variable.
 }
 \description{
-Get primary energy consumption by tech.
+Retrieve primary energy consumption data by technology.
 }
 \keyword{energy}
 \keyword{internal}
