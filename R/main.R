@@ -245,8 +245,8 @@ create_project <- function(db_path, db_name, prj_name, scenarios = NULL,
         bq$regions <- desired_regions
       }
 
-      # ensure that USA region is read in these queries, which are mapped only to USA
-      if (bq$title %in% c('ag export to the world center (USA) (Intl. Armington competition)')) {
+      # ensure that USA region is read in these queries of global trade sectors, which GCAM keeps in the USA region
+      if (bq$title %in% c('ag export to the world center (USA) (Intl. Armington competition)', 'traded iron and steel')) {
         table <- suppressMessages({
           rgcam::runQuery(conn, bq$query, sc, 'USA', warn.empty = FALSE)
         })
@@ -255,12 +255,22 @@ create_project <- function(db_path, db_name, prj_name, scenarios = NULL,
           rgcam::runQuery(conn, bq$query, sc, bq$regions, warn.empty = FALSE)
         })
       }
+      # A query can be empty for the selected regions and not for others (district heat exists in five
+      # core regions). Keep it as an empty table with its usual columns, taken from all regions, so the
+      # variables that read it report zero instead of stopping.
+      empty_for_regions <- nrow(table) == 0 && !identical(desired_regions, "All")
+      if (empty_for_regions) {
+        table <- suppressMessages({
+          rgcam::runQuery(conn, bq$query, sc, queries_touse_short[[qn]]$regions, warn.empty = FALSE)
+        })
+      }
       if (nrow(table) > 0) {
         prj_tmp <- rgcam::addQueryTable(
           project = prj_name, qdata = table,
           queryname = qn, clobber = FALSE,
           saveProj = FALSE, show_col_types = FALSE
         )
+        if (empty_for_regions) prj_tmp[[sc]][[qn]] <- prj_tmp[[sc]][[qn]][0, ]
         if (exists("prj")) {
           prj <- rgcam::mergeProjects(prj_name, list(prj, prj_tmp), clobber = FALSE, saveProj = FALSE)
         } else {
