@@ -1,0 +1,11 @@
+# File: trn_truck_annual_travel.csv
+# Title: Annual distance per truck, by GCAM truck size class
+# Units: vkt/veh/yr
+# Comments: gcamreport assumption: neither the UCD nor the OTAQ transport data has annual travel per vehicle
+#   for trucks. Converts truck service (tonne-km) into truck stocks and sales.
+#   TODO: replace with sourced values.
+# ----------
+rev_size.class,annual travel per vehicle
+Light truck,20000
+Medium truck,35000
+Heavy truck,50000
